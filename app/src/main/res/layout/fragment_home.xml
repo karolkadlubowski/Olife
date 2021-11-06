@@ -87,6 +87,8 @@
 
 
                 <ImageButton
+                    android:id="@+id/hf_ib_record_start"
+                    android:visibility="visible"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentRight="true"
@@ -96,14 +98,37 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/circle"
+                    android:background="@drawable/circle_blue"
                     android:fontFamily="cursive"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_microphone"
                     android:textSize="30sp" />
+
+                <ImageButton
+                    android:id="@+id/hf_ib_record_stop"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/circle_red"
+                    android:fontFamily="cursive"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_stop"
+                    android:textSize="30sp"
+                    android:visibility="invisible" />
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/play"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
 
     </LinearLayout>
@@ -120,22 +145,21 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
         android:text="Short notes"
         android:textColor="@color/white"
         android:textSize="25sp"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginBottom="10dp"/>
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/hf_rv_notes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="7.5dp"/>
-
+        android:layout_margin="7.5dp" />
 
 
 </LinearLayout>

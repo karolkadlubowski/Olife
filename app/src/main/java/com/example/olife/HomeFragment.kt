@@ -1,12 +1,18 @@
 package com.example.olife
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Environment
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
@@ -22,26 +28,15 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment() {
-    //private var _binding: FragmentHomeBinding? = null
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    // private val binding get() = _binding!!
-
     private lateinit var notesViewModel: NotesViewModel
     private lateinit var fragmentHomeBinding: FragmentHomeBinding
     private lateinit var notesAdapter: NotesAdapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //_binding = FragmentHomeBinding.inflate(inflater,container,false)
-        // val view = binding.root
-
-        //return view
-
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -51,12 +46,10 @@ class HomeFragment : Fragment() {
         notesViewModel = (activity as MainActivity).notesViewModel
         notesAdapter = (activity as MainActivity).notesAdapter
 
-        //val swipeGesture = object :
-
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-        ){
+        ) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -67,22 +60,21 @@ class HomeFragment : Fragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    val note = notesAdapter.differ.currentList[viewHolder.adapterPosition]
-                    notesViewModel.deleteNote(note)
+                val note = notesAdapter.differ.currentList[viewHolder.adapterPosition]
+                notesViewModel.deleteNote(note)
             }
 
             override fun getSwipeDirs(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder
             ): Int {
-                if(viewHolder.adapterPosition==notesAdapter.differ.currentList.size-1) return 0
+                if (viewHolder.adapterPosition == notesAdapter.differ.currentList.size - 1) return 0
                 return super.getSwipeDirs(recyclerView, viewHolder)
             }
 
         }).attachToRecyclerView(fragmentHomeBinding.hfRvNotes)
 
         notesAdapter.setOnItemClickListener {
-            //Toast.makeText(parentFragment?.context,it.id.toString(),Toast.LENGTH_SHORT).show()
             val bundle = Bundle().apply {
                 if (it.id == null)
                     putSerializable("selected_note", Note(null, null, null))
@@ -93,74 +85,97 @@ class HomeFragment : Fragment() {
                 R.id.action_homeFragment_to_noteInfoFragment,
                 bundle
             )
-//            if(it.id==null){
-//                notesViewModel.saveNote(Note(null,null,null))
-//            }
         }
-/*
-        setFragmentResultListener("saveNoteRequestKey"){requestKey, bundle ->
-            val result = bundle.getSerializable("saveNoteBundleKey") as Note
-            //notesViewModel.saveNote(No)
-        }
-*/
+
         initNotesRecyclerView()
         notesViewModel.getSavedNotes().observe(viewLifecycleOwner, {
             var editedList: ArrayList<Note> = ArrayList(it)
             editedList.add(Note(null, null, null))
             notesAdapter.differ.submitList(editedList)
         })
-        //viewNoteList()
+
+        //nagrania
+
+        //context.externalMediaDirs
+        var voiceRecorder = VoiceRecorder(this.requireContext())
+
+        fragmentHomeBinding.hfIbRecordStart.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(
+                    activity as MainActivity,
+                    Manifest.permission.RECORD_AUDIO
+                ) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
+                    activity as MainActivity,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                val permissions = arrayOf(
+                    android.Manifest.permission.RECORD_AUDIO,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+                ActivityCompat.requestPermissions(activity as MainActivity, permissions, 0)
+            } else {
+                voiceRecorder.setUp()
+                //Toast.makeText(activity,"Recording started",Toast.LENGTH_SHORT).show()
+                fragmentHomeBinding.hfIbRecordStart.visibility = View.INVISIBLE
+                fragmentHomeBinding.hfIbRecordStop.visibility = View.VISIBLE
+                voiceRecorder.startRecording()
+            }
+        }
+
+        fragmentHomeBinding.hfIbRecordStop.setOnClickListener {
+            fragmentHomeBinding.hfIbRecordStart.visibility = View.VISIBLE
+            fragmentHomeBinding.hfIbRecordStop.visibility = View.INVISIBLE
+            voiceRecorder.stopRecording()
+        }
+
+        fragmentHomeBinding.play.setOnClickListener {
+voiceRecorder.setUp()
+            var mp = MediaPlayer()
+            mp.setDataSource(voiceRecorder.output)
+            mp.prepare()
+            mp.start()
+        }
+
+
+
+
+
+
+
+
 
         fragmentHomeBinding.hfTvWelcome.text = getTimeFromWelcoming()
-
+/*
         var rec1 = Recording("l", "o")
         var rec2 = Recording("l2", "o2")
         var rec3 = Recording("l3", "o3")
         var rec4 = Recording("l4", "o4")
         var rec5 = Recording("l5", "o5")
-
+*/
         var records = ArrayList<Recording>()
-        records.add(rec1)
-        records.add(rec2)
-        records.add(rec3)
-        records.add(rec4)
-        records.add(rec5)
+        // records.add(rec1)
+//        records.add(rec2)
+//        records.add(rec3)
+//        records.add(rec4)
+//        records.add(rec5)
 
         val recordingsAdapter1 = RecordingsAdapter(records)
 
         fragmentHomeBinding.hfRvRecordings.adapter = recordingsAdapter1
         fragmentHomeBinding.hfRvRecordings.layoutManager =
             LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
-/*
-        var notes = ArrayList<Note>()
-        notes.add(Note(1, "1", "1"))
-        notes.add(Note(2, "2", "2"))
-        notes.add(Note(3, "3", "3"))
-        notes.add(Note(4, "4", "4"))
-        notes.add(Note(5, "5", "5"))
-
-        val notesAdapter1 = NotesAdapter(notes)*/
-        var gridLayoutManager = GridLayoutManager(activity, 2, RecyclerView.VERTICAL, false)
-        //fragmentHomeBinding.hfRvNotes.layoutManager = gridLayoutManager
-        //fragmentHomeBinding.hfRvNotes.setHasFixedSize(true)
-        //fragmentHomeBinding.hfRvNotes.adapter = notesAdapter1
     }
 
     private fun initNotesRecyclerView() {
         fragmentHomeBinding.hfRvNotes.apply {
             adapter = notesAdapter
-            //layoutManager = LinearLayoutManager(activity)
             layoutManager = GridLayoutManager(activity, 2, RecyclerView.VERTICAL, false)
 
         }
     }
 
-    /*
-        override fun onDestroyView() {
-            super.onDestroyView()
-            _binding=null
-        }
-    */
+
     private fun getTimeFromWelcoming(): String {
         val dt = Date()
         val hours: Int = dt.getHours()
