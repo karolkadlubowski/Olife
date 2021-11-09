@@ -1,8 +1,12 @@
 package com.example.olife.domain.di
 
 import com.example.olife.data.db.NoteDao
+import com.example.olife.data.db.VoiceNoteDao
+import com.example.olife.data.model.VoiceNote
 import com.example.olife.data.repository.dataSource.NotesLocalDataSource
+import com.example.olife.data.repository.dataSource.VoiceNotesLocalDataSource
 import com.example.olife.data.repository.dataSourceImpl.NotesLocalDataSourceImpl
+import com.example.olife.data.repository.dataSourceImpl.VoiceNotesLocalDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +18,13 @@ import javax.inject.Singleton
 class LocalDataModule {
     @Singleton
     @Provides
-    fun provideLocalDataSource(noteDao: NoteDao) : NotesLocalDataSource{
+    fun provideNotesLocalDataSource(noteDao: NoteDao) : NotesLocalDataSource{
         return NotesLocalDataSourceImpl(noteDao)
+    }
+
+    @Singleton
+    @Provides
+    fun provideVoiceNotesLocalDataSource(voiceNoteDao:VoiceNoteDao) : VoiceNotesLocalDataSource{
+        return VoiceNotesLocalDataSourceImpl(voiceNoteDao)
     }
 }

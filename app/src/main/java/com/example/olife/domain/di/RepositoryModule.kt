@@ -1,8 +1,11 @@
 package com.example.olife.domain.di
 
 import com.example.olife.data.repository.NotesRepositoryImpl
+import com.example.olife.data.repository.VoiceNotesRepositoryImpl
 import com.example.olife.data.repository.dataSource.NotesLocalDataSource
+import com.example.olife.data.repository.dataSource.VoiceNotesLocalDataSource
 import com.example.olife.domain.repository.NotesRepository
+import com.example.olife.domain.repository.VoiceNotesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,5 +21,13 @@ class RepositoryModule {
         notesLocalDataSource:NotesLocalDataSource
     ): NotesRepository{
         return NotesRepositoryImpl(notesLocalDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideVoiceNotesRepository(
+        voiceNotesLocalDataSource: VoiceNotesLocalDataSource
+    ) : VoiceNotesRepository{
+        return VoiceNotesRepositoryImpl(voiceNotesLocalDataSource)
     }
 }

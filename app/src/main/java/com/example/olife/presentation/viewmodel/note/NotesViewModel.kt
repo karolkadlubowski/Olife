@@ -1,14 +1,14 @@
-package com.example.olife.presentation.viewmodel
+package com.example.olife.presentation.viewmodel.note
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.example.olife.data.model.Note
-import com.example.olife.domain.usecase.DeleteNoteUseCase
-import com.example.olife.domain.usecase.GetSavedNotesUseCase
-import com.example.olife.domain.usecase.SaveNoteUseCase
-import com.example.olife.domain.usecase.UpdateNoteUseCase
+import com.example.olife.domain.usecase.note.DeleteNoteUseCase
+import com.example.olife.domain.usecase.note.GetSavedNotesUseCase
+import com.example.olife.domain.usecase.note.SaveNoteUseCase
+import com.example.olife.domain.usecase.note.UpdateNoteUseCase
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 

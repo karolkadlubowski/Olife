@@ -1,10 +1,14 @@
 package com.example.olife.domain.di
 
 import com.example.olife.domain.repository.NotesRepository
-import com.example.olife.domain.usecase.DeleteNoteUseCase
-import com.example.olife.domain.usecase.GetSavedNotesUseCase
-import com.example.olife.domain.usecase.SaveNoteUseCase
-import com.example.olife.domain.usecase.UpdateNoteUseCase
+import com.example.olife.domain.repository.VoiceNotesRepository
+import com.example.olife.domain.usecase.note.DeleteNoteUseCase
+import com.example.olife.domain.usecase.note.GetSavedNotesUseCase
+import com.example.olife.domain.usecase.note.SaveNoteUseCase
+import com.example.olife.domain.usecase.note.UpdateNoteUseCase
+import com.example.olife.domain.usecase.voiceNote.DeleteVoiceNoteUseCase
+import com.example.olife.domain.usecase.voiceNote.GetSavedVoiceNotesUseCase
+import com.example.olife.domain.usecase.voiceNote.SaveVoiceNoteUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,9 +20,9 @@ import javax.inject.Singleton
 class UseCaseModule {//connects with viewModel
     @Singleton
     @Provides
-    fun provideSaveNotesUseCase(
+    fun provideSaveNoteUseCase(
         notesRepository:NotesRepository
-    ): SaveNoteUseCase{
+    ): SaveNoteUseCase {
         return SaveNoteUseCase(notesRepository)
     }
 
@@ -26,7 +30,7 @@ class UseCaseModule {//connects with viewModel
     @Provides
     fun provideGetSavedNotesUseCase(
         notesRepository: NotesRepository
-    ): GetSavedNotesUseCase{
+    ): GetSavedNotesUseCase {
         return GetSavedNotesUseCase(notesRepository)
     }
 
@@ -34,7 +38,7 @@ class UseCaseModule {//connects with viewModel
     @Provides
     fun provideUpdateNoteUseCase(
         notesRepository: NotesRepository
-    ): UpdateNoteUseCase{
+    ): UpdateNoteUseCase {
         return UpdateNoteUseCase(notesRepository)
     }
 
@@ -42,7 +46,31 @@ class UseCaseModule {//connects with viewModel
     @Provides
     fun provideDeleteNoteUseCase(
         notesRepository: NotesRepository
-    ) : DeleteNoteUseCase{
+    ) : DeleteNoteUseCase {
         return DeleteNoteUseCase(notesRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSaveVoiceNoteUseCase(
+        voiceNotesRepository:VoiceNotesRepository
+    ) : SaveVoiceNoteUseCase{
+        return SaveVoiceNoteUseCase(voiceNotesRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetSavedVoiceNotesUseCase(
+        voiceNotesRepository: VoiceNotesRepository
+    ) : GetSavedVoiceNotesUseCase{
+        return GetSavedVoiceNotesUseCase(voiceNotesRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDeleteVoiceNoteUseCase(
+        voiceNotesRepository: VoiceNotesRepository
+    ) : DeleteVoiceNoteUseCase{
+        return DeleteVoiceNoteUseCase(voiceNotesRepository)
     }
 }

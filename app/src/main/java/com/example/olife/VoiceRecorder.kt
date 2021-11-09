@@ -9,6 +9,8 @@ import android.provider.MediaStore
 import android.widget.Toast
 import java.io.IOException
 import android.os.ParcelFileDescriptor
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class VoiceRecorder(private val context: Context) {
@@ -22,7 +24,9 @@ class VoiceRecorder(private val context: Context) {
 
 
     fun setUp() {
-        output = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).toString() + "/recording1.mp3"
+        fileName = getCurrentDateTime().toString("yyMMddHHmmss") + ".mp3"
+        //fileName = "recording"+ (System.currentTimeMillis() / 1000).toString() + ".mp3"
+        output = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).toString() + "/" + fileName
        /* var values = ContentValues(4)
         values.put(MediaStore.Audio.Media.TITLE, fileName);
         values.put(MediaStore.Audio.Media.DATE_ADDED, (System.currentTimeMillis() / 1000));
@@ -64,6 +68,17 @@ class VoiceRecorder(private val context: Context) {
             state = false
         } else {
             // Toast.makeText(this, "You are not recording right now!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    companion object{
+        fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
+            val formatter = SimpleDateFormat(format, locale)
+            return formatter.format(this)
+        }
+
+        fun getCurrentDateTime(): Date {
+            return Calendar.getInstance().time
         }
     }
 }

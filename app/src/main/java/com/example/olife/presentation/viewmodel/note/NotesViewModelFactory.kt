@@ -1,11 +1,11 @@
-package com.example.olife.presentation.viewmodel
+package com.example.olife.presentation.viewmodel.note
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.olife.domain.usecase.DeleteNoteUseCase
-import com.example.olife.domain.usecase.GetSavedNotesUseCase
-import com.example.olife.domain.usecase.SaveNoteUseCase
-import com.example.olife.domain.usecase.UpdateNoteUseCase
+import com.example.olife.domain.usecase.note.DeleteNoteUseCase
+import com.example.olife.domain.usecase.note.GetSavedNotesUseCase
+import com.example.olife.domain.usecase.note.SaveNoteUseCase
+import com.example.olife.domain.usecase.note.UpdateNoteUseCase
 
 class NotesViewModelFactory(//connects with DI, in that case FactoryModule
     private val app: Application,

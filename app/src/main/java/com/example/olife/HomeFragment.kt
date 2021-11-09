@@ -4,33 +4,35 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Environment
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.example.olife.data.model.Note
-import com.example.olife.data.model.Recording
-import com.example.olife.databinding.ActivityMainBinding
+import com.example.olife.data.model.VoiceNote
 import com.example.olife.databinding.FragmentHomeBinding
 import com.example.olife.presentation.adapter.NotesAdapter
-import com.example.olife.presentation.adapter.RecordingsAdapter
-import com.example.olife.presentation.viewmodel.NotesViewModel
+import com.example.olife.presentation.adapter.VoiceNotesAdapter
+import com.example.olife.presentation.viewmodel.note.NotesViewModel
+import com.example.olife.presentation.viewmodel.voiceNote.VoiceNotesViewModel
 
 import java.util.*
 import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment() {
-    private lateinit var notesViewModel: NotesViewModel
     private lateinit var fragmentHomeBinding: FragmentHomeBinding
+
+    private lateinit var notesViewModel: NotesViewModel
     private lateinit var notesAdapter: NotesAdapter
+
+    private lateinit var voiceNotesViewModel: VoiceNotesViewModel
+    private lateinit var voiceNotesAdapter : VoiceNotesAdapter
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,33 +48,7 @@ class HomeFragment : Fragment() {
         notesViewModel = (activity as MainActivity).notesViewModel
         notesAdapter = (activity as MainActivity).notesAdapter
 
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
-            0,
-            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-        ) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                //up and down so now
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val note = notesAdapter.differ.currentList[viewHolder.adapterPosition]
-                notesViewModel.deleteNote(note)
-            }
-
-            override fun getSwipeDirs(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder
-            ): Int {
-                if (viewHolder.adapterPosition == notesAdapter.differ.currentList.size - 1) return 0
-                return super.getSwipeDirs(recyclerView, viewHolder)
-            }
-
-        }).attachToRecyclerView(fragmentHomeBinding.hfRvNotes)
+        setNoteListItemTouchHelper()
 
         notesAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
@@ -88,6 +64,8 @@ class HomeFragment : Fragment() {
         }
 
         initNotesRecyclerView()
+
+
         notesViewModel.getSavedNotes().observe(viewLifecycleOwner, {
             var editedList: ArrayList<Note> = ArrayList(it)
             editedList.add(Note(null, null, null))
@@ -95,6 +73,20 @@ class HomeFragment : Fragment() {
         })
 
         //nagrania
+
+        voiceNotesViewModel = (activity as MainActivity).voiceNotesViewModel
+        voiceNotesAdapter = (activity as MainActivity).voiceNotesAdapter
+
+        setVoiceNoteListItemTouchHelper()
+
+        voiceNotesAdapter.setOnItemClickListener {
+            //voiceRecorder.setUp()
+            var mp = MediaPlayer()
+            mp.setDataSource(it.memoryLocation)
+            mp.prepare()
+            mp.start()
+        }
+
 
         //context.externalMediaDirs
         var voiceRecorder = VoiceRecorder(this.requireContext())
@@ -127,44 +119,17 @@ class HomeFragment : Fragment() {
             fragmentHomeBinding.hfIbRecordStart.visibility = View.VISIBLE
             fragmentHomeBinding.hfIbRecordStop.visibility = View.INVISIBLE
             voiceRecorder.stopRecording()
+            voiceNotesViewModel.saveVoiceNote(VoiceNote(null,voiceRecorder.fileName,voiceRecorder.output))
         }
-
-        fragmentHomeBinding.play.setOnClickListener {
-voiceRecorder.setUp()
-            var mp = MediaPlayer()
-            mp.setDataSource(voiceRecorder.output)
-            mp.prepare()
-            mp.start()
-        }
-
-
-
-
-
-
-
-
 
         fragmentHomeBinding.hfTvWelcome.text = getTimeFromWelcoming()
-/*
-        var rec1 = Recording("l", "o")
-        var rec2 = Recording("l2", "o2")
-        var rec3 = Recording("l3", "o3")
-        var rec4 = Recording("l4", "o4")
-        var rec5 = Recording("l5", "o5")
-*/
-        var records = ArrayList<Recording>()
-        // records.add(rec1)
-//        records.add(rec2)
-//        records.add(rec3)
-//        records.add(rec4)
-//        records.add(rec5)
 
-        val recordingsAdapter1 = RecordingsAdapter(records)
+        initVoiceNotesRecyclerView()
 
-        fragmentHomeBinding.hfRvRecordings.adapter = recordingsAdapter1
-        fragmentHomeBinding.hfRvRecordings.layoutManager =
-            LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
+        voiceNotesViewModel.getSavedVoiceNotes().observe(viewLifecycleOwner,{
+            voiceNotesAdapter.differ.submitList(it)
+        })
+
     }
 
     private fun initNotesRecyclerView() {
@@ -172,6 +137,13 @@ voiceRecorder.setUp()
             adapter = notesAdapter
             layoutManager = GridLayoutManager(activity, 2, RecyclerView.VERTICAL, false)
 
+        }
+    }
+
+    private fun initVoiceNotesRecyclerView(){
+        fragmentHomeBinding.hfRvVoiceNotes.apply {
+            adapter = voiceNotesAdapter
+            layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
         }
     }
 
@@ -183,9 +155,61 @@ voiceRecorder.setUp()
             return "Good morning"
         } else if (hours in 12..17) {
             return "Good afternoon"
-        } else if (hours in 18..24) {
+        } else if (hours in 18..24 || hours ==0) {
             return "Good evening"
         }
         return "Hello"
     }
+
+    private fun setNoteListItemTouchHelper(){
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                //up and down so now
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val note = notesAdapter.differ.currentList[viewHolder.adapterPosition]
+                notesViewModel.deleteNote(note)
+            }
+
+            override fun getSwipeDirs(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder
+            ): Int {
+                if (viewHolder.adapterPosition == notesAdapter.differ.currentList.size - 1) return 0
+                return super.getSwipeDirs(recyclerView, viewHolder)
+            }
+
+        }).attachToRecyclerView(fragmentHomeBinding.hfRvNotes)
+    }
+
+
+    private fun setVoiceNoteListItemTouchHelper(){
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN
+        ){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val voiceNote = voiceNotesAdapter.differ.currentList[viewHolder.adapterPosition]
+                voiceNotesViewModel.deleteVoiceNote(voiceNote)
+            }
+        }).attachToRecyclerView(fragmentHomeBinding.hfRvVoiceNotes)
+    }
 }
+

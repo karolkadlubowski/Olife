@@ -1,4 +1,4 @@
-package com.example.olife.domain.usecase
+package com.example.olife.domain.usecase.note
 
 import com.example.olife.data.model.Note
 import com.example.olife.domain.repository.NotesRepository

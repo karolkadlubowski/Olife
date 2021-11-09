@@ -6,7 +6,7 @@ import com.example.olife.domain.repository.NotesRepository
 import kotlinx.coroutines.flow.Flow
 
 class NotesRepositoryImpl(//connects with UseCase
-    private val notesLocalDataSource: NotesLocalDataSource
+    private val notesLocalDataSource: NotesLocalDataSource//provide it in di.LocalDataModule
 ) : NotesRepository {
     override suspend fun saveNote(note: Note) {
         notesLocalDataSource.saveNoteToDB(note)

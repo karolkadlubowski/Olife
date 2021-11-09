@@ -1,7 +1,6 @@
 package com.example.olife
 
 import android.os.Bundle
-import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.example.olife.data.model.Note
 import com.example.olife.databinding.FragmentNoteInfoBinding
-import com.example.olife.presentation.viewmodel.NotesViewModel
+import com.example.olife.presentation.viewmodel.note.NotesViewModel
 
 
 class NoteInfoFragment : Fragment() {

@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.example.olife.data.db.Database
 import com.example.olife.data.db.NoteDao
+import com.example.olife.data.db.VoiceNoteDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +16,7 @@ import javax.inject.Singleton
 class DataBaseModule {
     @Provides
     @Singleton
-    fun provideNotesDatabase(app : Application) : Database{
+    fun provideDatabase(app : Application) : Database{
         return Room.databaseBuilder(app,Database::class.java,"organiser_database")
             .fallbackToDestructiveMigration()// w razie konfliktów usuwa i tworzy tabele, uważać na to
             .build()
@@ -25,5 +26,11 @@ class DataBaseModule {
     @Provides
     fun provideNotesDao(database: Database) : NoteDao{
         return database.getNoteDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideVoiceNotesDao(database: Database) : VoiceNoteDao{
+        return database.getVoiceNoteDao()
     }
 }

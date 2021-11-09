@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.olife.data.model.Note
 import com.example.olife.databinding.NoteListItemBinding
-import com.example.olife.databinding.RecordingListItemBinding
 /*
 class NotesAdapter(private var list: ArrayList<Note>) :
     RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {

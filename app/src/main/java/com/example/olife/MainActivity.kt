@@ -5,11 +5,14 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.example.olife.data.model.Note
+import com.example.olife.data.model.VoiceNote
 import com.example.olife.databinding.ActivityMainBinding
 import com.example.olife.presentation.adapter.NotesAdapter
-import com.example.olife.presentation.viewmodel.NotesViewModel
-import com.example.olife.presentation.viewmodel.NotesViewModelFactory
+import com.example.olife.presentation.adapter.VoiceNotesAdapter
+import com.example.olife.presentation.viewmodel.note.NotesViewModel
+import com.example.olife.presentation.viewmodel.note.NotesViewModelFactory
+import com.example.olife.presentation.viewmodel.voiceNote.VoiceNotesModelFactory
+import com.example.olife.presentation.viewmodel.voiceNote.VoiceNotesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -21,6 +24,13 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var notesAdapter: NotesAdapter
     lateinit var notesViewModel: NotesViewModel
+
+
+    @Inject
+    lateinit var voiceNotesViewModelFactory: VoiceNotesModelFactory
+    @Inject
+    lateinit var voiceNotesAdapter: VoiceNotesAdapter
+    lateinit var voiceNotesViewModel: VoiceNotesViewModel
 
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,11 +45,9 @@ class MainActivity : AppCompatActivity() {
         )
         notesViewModel = ViewModelProvider(this,notesViewModelFactory)
             .get(NotesViewModel::class.java)
-        //notesViewModel.saveNote(Note(null,"Tytul 1","Opis"))
-        //notesViewModel.saveNote(Note(null,"Tytul 2","Opis2"))
-        //notesViewModel.saveNote(Note(null,"Tytul 3","Opis3"))
 
-       //val elo= notesViewModel.getSavedNotes()
-       // val eloval = elo.value
+        voiceNotesViewModel = ViewModelProvider(this,voiceNotesViewModelFactory)
+            .get(VoiceNotesViewModel::class.java)
+       // voiceNotesViewModel.saveVoiceNote(VoiceNote(null,"elo","elo"))
     }
 }
