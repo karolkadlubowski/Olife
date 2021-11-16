@@ -11,6 +11,8 @@ import com.example.olife.databinding.VoiceNoteListItemBinding
 
 class VoiceNotesAdapter() : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNotesViewHolder>() {
 
+    //var _binding : VoiceNoteListItemBinding? = null
+
     private val callback = object : DiffUtil.ItemCallback<VoiceNote>(){
         override fun areItemsTheSame(oldItem: VoiceNote, newItem: VoiceNote): Boolean {
             return oldItem.id==newItem.id
@@ -27,6 +29,7 @@ class VoiceNotesAdapter() : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNotesVie
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VoiceNotesViewHolder {
         val binding = VoiceNoteListItemBinding
             .inflate(LayoutInflater.from(parent.context),parent,false)
+        //_binding=binding
         return VoiceNotesViewHolder(binding)
     }
 

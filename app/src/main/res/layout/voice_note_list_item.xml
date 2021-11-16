@@ -18,10 +18,20 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/hf_rv_iv_voice_notes_play"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:src="@drawable/ic_play"
             />
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/hf_rv_iv_voice_notes_stop"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_pause"/>
+
+
     </LinearLayout>
 
 

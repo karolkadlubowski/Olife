@@ -39,13 +39,13 @@ class NoteInfoFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        if(mNote.id==null){
+        /*if(mNote.id==null){
             notesViewModel.saveNote(Note(null,fragmentNoteInfoBinding.nfTvTitle.text.toString(),fragmentNoteInfoBinding.nfTvContent.text.toString()))
         }
         else
-        {
+        {*/
             notesViewModel.updateNote(Note(mNote.id,fragmentNoteInfoBinding.nfTvTitle.text.toString(),fragmentNoteInfoBinding.nfTvContent.text.toString()))
-        }
+        //}
         super.onDestroyView()
     }
 

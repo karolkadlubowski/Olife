@@ -51,16 +51,18 @@ class HomeFragment : Fragment() {
         setNoteListItemTouchHelper()
 
         notesAdapter.setOnItemClickListener {
-            val bundle = Bundle().apply {
+            Bundle().apply {
                 if (it.id == null)
-                    putSerializable("selected_note", Note(null, null, null))
+                        notesViewModel.saveNote(Note(null, null, null))
                 else
+                {
                     putSerializable("selected_note", it)
+                    findNavController().navigate(
+                        R.id.action_homeFragment_to_noteInfoFragment,
+                        this
+                    )
+                }
             }
-            findNavController().navigate(
-                R.id.action_homeFragment_to_noteInfoFragment,
-                bundle
-            )
         }
 
         initNotesRecyclerView()
@@ -80,11 +82,11 @@ class HomeFragment : Fragment() {
         setVoiceNoteListItemTouchHelper()
 
         voiceNotesAdapter.setOnItemClickListener {
-            //voiceRecorder.setUp()
             var mp = MediaPlayer()
             mp.setDataSource(it.memoryLocation)
             mp.prepare()
             mp.start()
+           // voiceNotesAdapter._binding?.hfRvIvVoiceNotesStop?.visibility
         }
 
 

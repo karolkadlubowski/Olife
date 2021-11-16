@@ -5,30 +5,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
+import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.olife.R
+import com.example.olife.databinding.FragmentCalendarBinding
+import com.example.olife.presentation.adapter.CalendarAdapter
+import java.time.LocalDate
+import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CalendarFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CalendarFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var fragmentCalendarBinding : FragmentCalendarBinding
+private lateinit var monthYearText : TextView
+private lateinit var calendarRecyclerView: RecyclerView
+private lateinit var calendarAdapter: CalendarAdapter
+private lateinit var selectedDate:LocalDate
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,23 +34,80 @@ class CalendarFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_calendar, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CalendarFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CalendarFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        fragmentCalendarBinding = FragmentCalendarBinding.bind(view)
+
+        initCalendarRecyclerView()
+
+
+        fragmentCalendarBinding.cfBtMonthBefore.setOnClickListener{previousMonthAction(monthYearText)}
+        fragmentCalendarBinding.cfBtMonthAfter.setOnClickListener{nextMonthAction(monthYearText)}
+
     }
+
+    private fun initCalendarRecyclerView() {
+        calendarRecyclerView = fragmentCalendarBinding.cfRvCalendar
+        monthYearText = fragmentCalendarBinding.cfTvMonthYear
+        selectedDate = LocalDate.now()
+        setMonthView()
+    }
+
+    private fun setMonthView() {
+        monthYearText.text = monthYearFromDate(selectedDate)
+        val daysInMonth = daysInMonthArray(selectedDate)
+        calendarAdapter = CalendarAdapter(daysInMonth)
+
+        //var calendarRecyclerViewLayoutManager = GridLayoutManager(activity, 7)
+        calendarRecyclerView.layoutManager = GridLayoutManager(activity, 7)
+
+        calendarRecyclerView.adapter=calendarAdapter
+
+        calendarAdapter.setOnItemClickListener {
+            if(it!=""){
+            var message = "Selected Date " + it + " " + monthYearFromDate(selectedDate)
+            Toast.makeText(parentFragment?.context,message,Toast.LENGTH_LONG).show()
+             }
+        }
+
+    }
+
+    private fun monthYearFromDate(date : LocalDate) : String{
+     val formatter : DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM yyyy")
+        return date.format(formatter)
+    }
+
+    private fun daysInMonthArray(date : LocalDate) : ArrayList<String>{
+        var daysInMonthArray = ArrayList<String>()
+        var yearMonth : YearMonth = YearMonth.from(date)
+        var daysInMonth = yearMonth.lengthOfMonth()
+        var firstOfMonth = selectedDate.withDayOfMonth(1)
+        var dayOfWeek = firstOfMonth.dayOfWeek.value
+
+        for(i in 1 until dayOfWeek)
+            daysInMonthArray.add("")
+
+        for(i in 1..daysInMonth)
+        {
+            daysInMonthArray.add(i.toString())
+            /*if(i<=dayOfWeek && i > daysInMonth+dayOfWeek){
+                daysInMonthArray.add("")
+            }
+            else
+            {
+                daysInMonthArray.add((i-dayOfWeek).toString())
+            }*/
+        }
+        return daysInMonthArray
+    }
+
+    private fun previousMonthAction(view : View){
+        selectedDate = selectedDate.minusMonths(1)
+        setMonthView()
+    }
+    private fun nextMonthAction(view : View){
+        selectedDate = selectedDate.plusMonths(1)
+        setMonthView()
+    }
+
 }

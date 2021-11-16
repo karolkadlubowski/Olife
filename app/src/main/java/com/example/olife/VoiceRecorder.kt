@@ -24,7 +24,7 @@ class VoiceRecorder(private val context: Context) {
 
 
     fun setUp() {
-        fileName = getCurrentDateTime().toString("yyMMddHHmmss") + ".mp3"
+        fileName = getCurrentDateTime().toString("MMddHHmmss") + ".mp3"
         //fileName = "recording"+ (System.currentTimeMillis() / 1000).toString() + ".mp3"
         output = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).toString() + "/" + fileName
        /* var values = ContentValues(4)
