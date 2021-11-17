@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CalendarUtils {
+object CalendarUtils {
     public lateinit var selectedDate: LocalDate
 
     fun getFormattedDate(date: LocalDate): String? {

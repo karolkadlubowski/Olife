@@ -24,7 +24,7 @@ class CalendarFragment : Fragment() {
     private lateinit var calendarAdapter: CalendarAdapter
     //private lateinit var selectedDate: LocalDate
 
-    private val calendarUtils = CalendarUtils()
+    private val calendarUtils = CalendarUtils
 
 
     override fun onCreateView(
@@ -37,6 +37,7 @@ class CalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //calendarRecyclerView.height=fragmentCalendarBinding.
         fragmentCalendarBinding = FragmentCalendarBinding.bind(view)
 
         initCalendarRecyclerView()

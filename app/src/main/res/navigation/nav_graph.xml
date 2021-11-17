@@ -18,7 +18,11 @@
         android:id="@+id/calendarFragment"
         android:name="com.example.olife.CalendarFragment"
         android:label="fragment_calendar"
-        tools:layout="@layout/fragment_calendar" />
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_calendarFragment_to_eventFragment"
+            app:destination="@id/eventFragment" />
+    </fragment>
     <fragment
         android:id="@+id/forthcomingFragment"
         android:name="com.example.olife.ForthcomingFragment"
@@ -33,4 +37,9 @@
         android:name="selected_note"
         app:argType="com.example.olife.data.model.Note" />
     </fragment>
+    <fragment
+        android:id="@+id/eventFragment"
+        android:name="com.example.olife.EventFragment"
+        android:label="fragment_event"
+        tools:layout="@layout/fragment_event" />
 </navigation>
