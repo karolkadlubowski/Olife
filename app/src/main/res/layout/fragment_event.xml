@@ -1,14 +1,258 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/DeepBlue"
+    android:orientation="vertical"
+    android:padding="20dp"
     tools:context=".EventFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
 
-</FrameLayout>
+        <ImageButton
+            android:id="@+id/ef_ib_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@drawable/ic_deny"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Event"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/ef_ib_cancel"
+            app:layout_constraintRight_toLeftOf="@id/ef_ib_accept"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/ef_ib_accept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@drawable/ic_accept"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ef_cv_event_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/BlueViolet1"
+        app:cardCornerRadius="15dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/white"
+            app:hintTextColor="@color/white">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/ef_et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/ButtonBlue"
+                android:hint="Event name"
+                android:textColor="@color/white"
+                android:textCursorDrawable="@null"
+                android:textSize="20sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/BlueViolet1"
+            app:cardCornerRadius="15dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/white"
+                app:hintTextColor="@color/white">
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/ef_et_event_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/ButtonBlue"
+                    android:focusable="false"
+
+                    android:focusableInTouchMode="false"
+                    android:hint="Event date"
+                    android:textColor="@color/white"
+                    android:textCursorDrawable="@null"
+                    android:textSize="20sp" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/BlueViolet1"
+            app:cardCornerRadius="15dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/white"
+                app:hintTextColor="@color/white">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/ef_et_event_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/ButtonBlue"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="Event time"
+                    android:textColor="@color/white"
+                    android:textCursorDrawable="@null"
+                    android:textSize="20sp" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/BlueViolet1"
+            app:cardCornerRadius="15dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/white"
+                app:hintTextColor="@color/white">
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/ef_et_notification_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/ButtonBlue"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="Notification date"
+                    android:textColor="@color/white"
+                    android:textCursorDrawable="@null"
+                    android:textSize="20sp" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/BlueViolet1"
+            app:cardCornerRadius="15dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/white"
+                app:hintTextColor="@color/white">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/ef_et_notification_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/ButtonBlue"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="Notification time"
+                    android:textColor="@color/white"
+                    android:textCursorDrawable="@null"
+                    android:textSize="20sp" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/BlueViolet1"
+        app:cardCornerRadius="15dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/white"
+            app:hintTextColor="@color/white">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/ef_et_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/ButtonBlue"
+                android:hint="Event description"
+                android:textColor="@color/white"
+                android:textCursorDrawable="@null"
+                android:textSize="20sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

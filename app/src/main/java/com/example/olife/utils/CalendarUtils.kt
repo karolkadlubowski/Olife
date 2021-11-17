@@ -10,7 +10,7 @@ object CalendarUtils {
     public lateinit var selectedDate: LocalDate
 
     fun getFormattedDate(date: LocalDate): String? {
-        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ENGLISH)
+        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.ENGLISH)
         return date.format(formatter)
     }
 

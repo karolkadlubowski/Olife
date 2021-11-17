@@ -49,9 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="10.dp"
-            app:cardCornerRadius="10dp"
-
-            >
+            app:cardCornerRadius="10dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -88,7 +86,6 @@
 
                 <ImageButton
                     android:id="@+id/hf_ib_record_start"
-                    android:visibility="visible"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentRight="true"
@@ -102,7 +99,8 @@
                     android:fontFamily="cursive"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_microphone"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:visibility="visible" />
 
                 <ImageButton
                     android:id="@+id/hf_ib_record_stop"

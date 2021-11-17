@@ -41,5 +41,9 @@
         android:id="@+id/eventFragment"
         android:name="com.example.olife.EventFragment"
         android:label="fragment_event"
-        tools:layout="@layout/fragment_event" />
+        tools:layout="@layout/fragment_event" >
+        <action
+            android:id="@+id/action_eventFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
+    </fragment>
 </navigation>
