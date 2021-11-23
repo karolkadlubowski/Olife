@@ -9,9 +9,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.olife.databinding.FragmentCalendarBinding
 import com.example.olife.presentation.adapter.CalendarAdapter
+import com.example.olife.presentation.adapter.EventsAdapter
+import com.example.olife.presentation.viewmodel.event.EventsViewModel
 import com.example.olife.utils.CalendarUtils
 import java.time.LocalDate
 import java.time.YearMonth
@@ -26,6 +29,10 @@ class CalendarFragment : Fragment() {
     //private lateinit var selectedDate: LocalDate
 
     private val calendarUtils = CalendarUtils
+
+    private lateinit var eventsViewModel : EventsViewModel
+    private lateinit var eventsAdapter: EventsAdapter
+
 
 
     override fun onCreateView(
@@ -57,6 +64,22 @@ class CalendarFragment : Fragment() {
             )
         }
 
+        eventsViewModel = (activity as MainActivity).eventsViewModel
+        eventsAdapter = (activity as MainActivity).eventsAdapter
+
+        initEventsRecyclerView()
+
+        eventsViewModel.getSavedEvents().observe(viewLifecycleOwner,{
+            eventsAdapter.differ.submitList(it)
+        })
+
+    }
+
+    private fun initEventsRecyclerView() {
+        fragmentCalendarBinding.cfRvEvents.apply {
+            adapter = eventsAdapter
+            layoutManager = LinearLayoutManager(activity,RecyclerView.VERTICAL,false)
+        }
     }
 
     private fun initCalendarRecyclerView() {

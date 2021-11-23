@@ -1,7 +1,12 @@
 package com.example.olife.domain.di
 
+import com.example.olife.domain.repository.EventsRepository
 import com.example.olife.domain.repository.NotesRepository
 import com.example.olife.domain.repository.VoiceNotesRepository
+import com.example.olife.domain.usecase.event.DeleteEventUseCase
+import com.example.olife.domain.usecase.event.GetSavedEventsUseCase
+import com.example.olife.domain.usecase.event.SaveEventUseCase
+import com.example.olife.domain.usecase.event.UpdateEventUseCase
 import com.example.olife.domain.usecase.note.DeleteNoteUseCase
 import com.example.olife.domain.usecase.note.GetSavedNotesUseCase
 import com.example.olife.domain.usecase.note.SaveNoteUseCase
@@ -72,5 +77,37 @@ class UseCaseModule {//connects with viewModel
         voiceNotesRepository: VoiceNotesRepository
     ) : DeleteVoiceNoteUseCase{
         return DeleteVoiceNoteUseCase(voiceNotesRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSaveEventUseCase(
+        eventsRepository: EventsRepository
+    ) : SaveEventUseCase{
+        return SaveEventUseCase(eventsRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetSavedEventsUseCase(
+        eventsRepository: EventsRepository
+    ) : GetSavedEventsUseCase{
+        return GetSavedEventsUseCase(eventsRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUpdateEventUseCase(
+        eventsRepository: EventsRepository
+    ) : UpdateEventUseCase{
+        return UpdateEventUseCase(eventsRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDeleteEventUseCase(
+        eventsRepository: EventsRepository
+    ) : DeleteEventUseCase{
+        return DeleteEventUseCase(eventsRepository)
     }
 }

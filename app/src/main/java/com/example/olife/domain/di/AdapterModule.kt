@@ -1,6 +1,7 @@
 package com.example.olife.domain.di
 
 import com.example.olife.data.model.Note
+import com.example.olife.presentation.adapter.EventsAdapter
 import com.example.olife.presentation.adapter.NotesAdapter
 import com.example.olife.presentation.adapter.VoiceNotesAdapter
 import dagger.Module
@@ -22,5 +23,11 @@ class AdapterModule {
     @Provides
     fun provideVoiceNotesAdapter():VoiceNotesAdapter{
         return VoiceNotesAdapter()
+    }
+
+    @Singleton
+    @Provides
+    fun provideEventsAdapter():EventsAdapter{
+        return EventsAdapter()
     }
 }

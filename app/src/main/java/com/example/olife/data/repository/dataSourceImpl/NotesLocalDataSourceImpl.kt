@@ -6,7 +6,7 @@ import com.example.olife.data.repository.dataSource.NotesLocalDataSource
 import kotlinx.coroutines.flow.Flow
 
 class NotesLocalDataSourceImpl(
-    private val noteDao: NoteDao //provide it in di.LocalDataModule
+    private val noteDao: NoteDao //provide it in di.DatabaseModule
 ) : NotesLocalDataSource { //connects with domain.repo
     override suspend fun saveNoteToDB(note: Note) {
         return noteDao.insertNote(note)

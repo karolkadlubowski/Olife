@@ -5,6 +5,6 @@ import com.example.olife.domain.repository.NotesRepository
 
 class UpdateNoteUseCase(
     private val notesRepository:NotesRepository //provide it in DI.RepositoryModule
-) { //connects with DI,in that case UseCaseModule
+) { //connects with viewmodel
     suspend fun execute(note: Note) = notesRepository.updateNote(note)
 }

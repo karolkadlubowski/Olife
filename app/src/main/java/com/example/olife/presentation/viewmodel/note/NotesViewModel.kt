@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class NotesViewModel(//change in viewModel = change in viewModelFactory
     private val app: Application,
-    private val saveNoteUseCase: SaveNoteUseCase,
+    private val saveNoteUseCase: SaveNoteUseCase,//provide it in DI.UseCaseModule
     private val getSavedNotesUseCase: GetSavedNotesUseCase,
     private val updateNoteUseCase: UpdateNoteUseCase,
     private val deleteNoteUseCase: DeleteNoteUseCase

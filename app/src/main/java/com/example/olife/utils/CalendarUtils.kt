@@ -9,9 +9,14 @@ import kotlin.collections.ArrayList
 object CalendarUtils {
     public lateinit var selectedDate: LocalDate
 
-    fun getFormattedDate(date: LocalDate): String? {
+    fun getStringFromLocalDate(date: LocalDate): String {
         val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.ENGLISH)
         return date.format(formatter)
+    }
+
+    fun getLocalDateFromString(dateString: String) : LocalDate{
+        val formatter : DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.ENGLISH)
+        return LocalDate.parse(dateString,formatter)
     }
 
     fun monthYearFromDate(date: LocalDate): String {

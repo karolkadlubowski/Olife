@@ -68,9 +68,10 @@ class CalendarAdapter(private val days: ArrayList<LocalDate?>) : RecyclerView.Ad
            binding.root.setOnClickListener {
                if(date!=null){
                    calendarUtils.selectedDate = date as LocalDate
-                    binding.hfTvCalendarCell.setBackgroundColor(Color.LTGRAY)
                    selectedItem?.let { it1 -> bindingsList?.get(it1)?.hfTvCalendarCell!!.setBackgroundColor(Color.TRANSPARENT) }
                    selectedItem = position
+                    binding.hfTvCalendarCell.setBackgroundColor(Color.LTGRAY)
+
                }
 
                onItemClickListener?.let {
