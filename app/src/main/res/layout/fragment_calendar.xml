@@ -19,7 +19,6 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:orientation="horizontal">
 
@@ -134,11 +133,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cf_rv_calendar"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/cd_ll_days_of_week"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         />
 
 
@@ -147,7 +146,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/cf_rv_calendar"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/cf_fb_add_event"
@@ -158,9 +160,10 @@
         android:backgroundTint="@color/ButtonBlue"
         android:contentDescription="lol"
         android:src="@drawable/ic_add"
-        app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:tint="@color/white" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

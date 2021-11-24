@@ -27,15 +27,15 @@ class CalendarAdapter(private val days: ArrayList<LocalDate?>) : RecyclerView.Ad
         val binding = CalendarCellListItemBinding
             .inflate(LayoutInflater.from(parent.context),parent,false)
         bindingsList?.add(binding)
-        binding.hfTvCalendarCell.width= parent.width/7
-        binding.hfTvCalendarCell.height=parent.height/7
-        binding.hfTvCalendarCell.gravity=Gravity.CENTER_HORIZONTAL
+        binding.cfTvCalendarCell.width= parent.width/7
+        //binding.hfTvCalendarCell.height=parent.height/5
+        binding.cfTvCalendarCell.gravity=Gravity.CENTER_HORIZONTAL
         val typedValue = TypedValue()
         parent.context.theme.resolveAttribute(android.R.attr.selectableItemBackground,typedValue,
             true
         )
 
-        binding.hfTvCalendarCell.setBackgroundResource(typedValue.resourceId)
+        binding.cfLl.setBackgroundResource(typedValue.resourceId)
         return CalendarViewHolder(binding)
     }
 
@@ -44,7 +44,7 @@ class CalendarAdapter(private val days: ArrayList<LocalDate?>) : RecyclerView.Ad
 
         val date = days[position]
         if(date!=null && date == calendarUtils.selectedDate){
-            holder.binding.hfTvCalendarCell.setBackgroundColor(Color.LTGRAY)
+            holder.binding.cfLl.setBackgroundColor(Color.LTGRAY)
             selectedItem=position
         }
 
@@ -62,15 +62,15 @@ class CalendarAdapter(private val days: ArrayList<LocalDate?>) : RecyclerView.Ad
 
            date = dayOfMonth
            if (dayOfMonth != null) {
-               binding.hfTvCalendarCell.text=dayOfMonth.dayOfMonth.toString()
+               binding.cfTvCalendarCell.text=dayOfMonth.dayOfMonth.toString()
            }else
-               binding.hfTvCalendarCell.text=""
+               binding.cfTvCalendarCell.text=""
            binding.root.setOnClickListener {
                if(date!=null){
                    calendarUtils.selectedDate = date as LocalDate
-                   selectedItem?.let { it1 -> bindingsList?.get(it1)?.hfTvCalendarCell!!.setBackgroundColor(Color.TRANSPARENT) }
+                   selectedItem?.let { it1 -> bindingsList?.get(it1)?.cfLl!!.setBackgroundColor(Color.TRANSPARENT) }
                    selectedItem = position
-                    binding.hfTvCalendarCell.setBackgroundColor(Color.LTGRAY)
+                    binding.cfLl.setBackgroundColor(Color.LTGRAY)
 
                }
 

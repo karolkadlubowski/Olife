@@ -2,18 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cf_ll"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="75dp"
     android:gravity="center">
 
     <TextView
+        android:id="@+id/cf_tv_calendar_cell"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:paddingTop="10dp"
-        android:id="@+id/hf_tv_calendar_cell"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="1"
         android:textColor="@color/white"
-        android:textSize="20sp"
-        />
+        android:textSize="20sp" />
 
 </LinearLayout>
