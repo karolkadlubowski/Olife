@@ -1,155 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/DeepBlue"
-    android:orientation="vertical"
-    tools:context=".CalendarFragment">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/cd_ll_days_of_week"
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/DeepBlue"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent">
+        tools:context=".CalendarFragment">
 
         <LinearLayout
-
+            android:id="@+id/cd_ll_days_of_week"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/cf_bt_month_before"
-                android:layout_width="0dp"
+            <LinearLayout
+
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/DeepBlue"
-                android:foreground="?attr/selectableItemBackground"
-                android:src="@drawable/ic_arrow_left"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
 
-                />
+                <ImageButton
+                    android:id="@+id/cf_bt_month_before"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/DeepBlue"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:src="@drawable/ic_arrow_left"
 
-            <TextView
-                android:id="@+id/cf_tv_month_year"
-                android:layout_width="0dp"
+                    />
+
+                <TextView
+                    android:id="@+id/cf_tv_month_year"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:text="Month Year"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/cf_bt_month_after"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/DeepBlue"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:src="@drawable/ic_arrow_right" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="2"
-                android:text="Month Year"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/cf_bt_month_after"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/DeepBlue"
-                android:foreground="?attr/selectableItemBackground"
-                android:src="@drawable/ic_arrow_right" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="MON"
+                    android:textAlignment="center"
+                    android:textColor="@color/LightLightGray"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="TUE"
+                    android:textAlignment="center"
+                    android:textColor="@color/LightLightGray"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="WED"
+                    android:textAlignment="center"
+                    android:textColor="@color/LightLightGray"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="THU"
+                    android:textAlignment="center"
+                    android:textColor="@color/LightLightGray"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="FRI"
+                    android:textAlignment="center"
+                    android:textColor="@color/LightLightGray"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="SAT"
+                    android:textAlignment="center"
+                    android:textColor="@color/LightLightGray"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="SUN"
+                    android:textAlignment="center"
+                    android:textColor="@color/LightLightGray"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cf_rv_calendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal">
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cd_ll_days_of_week"
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="MON"
-                android:textAlignment="center"
-                android:textColor="@color/LightLightGray"
-                android:textSize="16sp" />
+            />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TUE"
-                android:textAlignment="center"
-                android:textColor="@color/LightLightGray"
-                android:textSize="16sp" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="WED"
-                android:textAlignment="center"
-                android:textColor="@color/LightLightGray"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="THU"
-                android:textAlignment="center"
-                android:textColor="@color/LightLightGray"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="FRI"
-                android:textAlignment="center"
-                android:textColor="@color/LightLightGray"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="SAT"
-                android:textAlignment="center"
-                android:textColor="@color/LightLightGray"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="SUN"
-                android:textAlignment="center"
-                android:textColor="@color/LightLightGray"
-                android:textSize="16sp" />
-
-        </LinearLayout>
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cf_rv_events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cf_rv_calendar" />
 
     </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/cf_rv_calendar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/cd_ll_days_of_week"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-
-        />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/cf_rv_events"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/cf_rv_calendar"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/cf_fb_add_event"
@@ -163,7 +169,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:tint="@color/white" />
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
