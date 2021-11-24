@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.olife.databinding.FragmentCalendarBinding
@@ -48,15 +49,19 @@ class CalendarFragment : Fragment() {
         //calendarRecyclerView.height=fragmentCalendarBinding.
         fragmentCalendarBinding = FragmentCalendarBinding.bind(view)
 
+        eventsViewModel = (activity as MainActivity).eventsViewModel
+        eventsAdapter = (activity as MainActivity).eventsAdapter
+
+        initEventsRecyclerView()
+        setEventListItemTouchHelper()
+
         initCalendarRecyclerView()
 
 
-        fragmentCalendarBinding.cfBtMonthBefore.setOnClickListener {
-            previousMonthAction(
-                monthYearText
-            )
-        }
+        fragmentCalendarBinding.cfBtMonthBefore.setOnClickListener { previousMonthAction(monthYearText) }
         fragmentCalendarBinding.cfBtMonthAfter.setOnClickListener { nextMonthAction(monthYearText) }
+
+
 
         fragmentCalendarBinding.cfFbAddEvent.setOnClickListener {
             findNavController().navigate(
@@ -64,14 +69,6 @@ class CalendarFragment : Fragment() {
             )
         }
 
-        eventsViewModel = (activity as MainActivity).eventsViewModel
-        eventsAdapter = (activity as MainActivity).eventsAdapter
-
-        initEventsRecyclerView()
-
-        eventsViewModel.getSavedEvents().observe(viewLifecycleOwner,{
-            eventsAdapter.differ.submitList(it)
-        })
 
     }
 
@@ -89,6 +86,7 @@ class CalendarFragment : Fragment() {
         setMonthView()
     }
 
+
     private fun setMonthView() {
         monthYearText.text = calendarUtils.monthYearFromDate(calendarUtils.selectedDate)
         val daysInMonth = calendarUtils.getDaysInMonthArray(calendarUtils.selectedDate)
@@ -99,10 +97,17 @@ class CalendarFragment : Fragment() {
 
         calendarRecyclerView.adapter = calendarAdapter
 
-        calendarAdapter.setOnItemClickListener {
-            if (it != null) {
-               var message = "Selected Date $it"
-                Toast.makeText(parentFragment?.context, message, Toast.LENGTH_LONG).show()
+        eventsViewModel.getEventsOnCertainDay(CalendarUtils.selectedDate).observe(viewLifecycleOwner,{
+            eventsAdapter.differ.submitList(it)
+        })
+
+        calendarAdapter.setOnItemClickListener { localDate ->
+            if (localDate != null) {
+               var message = "Selected Date $localDate"
+                //Toast.makeText(parentFragment?.context, message, Toast.LENGTH_LONG).show()
+                eventsViewModel.getEventsOnCertainDay(localDate).observe(viewLifecycleOwner,{
+                    eventsAdapter.differ.submitList(it)
+                })
             }
         }
 
@@ -117,6 +122,29 @@ class CalendarFragment : Fragment() {
     private fun nextMonthAction(view: View) {
         calendarUtils.selectedDate = calendarUtils.selectedDate.plusMonths(1)
         setMonthView()
+    }
+
+    private fun setEventListItemTouchHelper(){
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                //up and down so now
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val event = eventsAdapter.differ.currentList[viewHolder.adapterPosition]
+                eventsViewModel.deleteEvent(event)
+            }
+
+
+        }).attachToRecyclerView(fragmentCalendarBinding.cfRvEvents)
     }
 
 }

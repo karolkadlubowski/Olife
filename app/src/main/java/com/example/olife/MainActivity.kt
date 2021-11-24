@@ -67,6 +67,6 @@ class MainActivity : AppCompatActivity() {
             .get(EventsViewModel::class.java)
        // voiceNotesViewModel.saveVoiceNote(VoiceNote(null,"elo","elo"))
 
-        //eventsViewModel.saveEvent(Event(null, "Git nazwa",CalendarUtils.getLocalDateFromString("12.10.2021"),TimeUtils.getLocalTimeFromString("09:30"),CalendarUtils.getLocalDateFromString("12.10.2021"),TimeUtils.getLocalTimeFromString("09:30"),"HEHE DOBRE"))
+        //eventsViewModel.saveEvent(Event(null, "Evento",CalendarUtils.getLocalDateFromString("24.11.2021"),TimeUtils.getLocalTimeFromString("09:30"),CalendarUtils.getLocalDateFromString("25.11.2021"),TimeUtils.getLocalTimeFromString("09:30"),"Pomaranczowe"))
     }
 }

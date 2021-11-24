@@ -4,6 +4,7 @@ import com.example.olife.data.db.EventDao
 import com.example.olife.data.model.Event
 import com.example.olife.data.repository.dataSource.EventsLocalDataSource
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 class EventsLocalDataSourceImpl(private val eventDao: EventDao) : EventsLocalDataSource {
     override suspend fun saveEventToDB(event: Event) {
@@ -20,6 +21,10 @@ class EventsLocalDataSourceImpl(private val eventDao: EventDao) : EventsLocalDat
 
     override suspend fun deleteEvent(event: Event) {
         eventDao.deleteEvent(event)
+    }
+
+    override fun getEventsOnCertainDay(localDate: LocalDate): Flow<List<Event>> {
+        return eventDao.getEventsOnCertainDay(localDate)
     }
 
 }

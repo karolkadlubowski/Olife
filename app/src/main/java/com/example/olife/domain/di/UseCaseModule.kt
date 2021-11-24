@@ -3,10 +3,7 @@ package com.example.olife.domain.di
 import com.example.olife.domain.repository.EventsRepository
 import com.example.olife.domain.repository.NotesRepository
 import com.example.olife.domain.repository.VoiceNotesRepository
-import com.example.olife.domain.usecase.event.DeleteEventUseCase
-import com.example.olife.domain.usecase.event.GetSavedEventsUseCase
-import com.example.olife.domain.usecase.event.SaveEventUseCase
-import com.example.olife.domain.usecase.event.UpdateEventUseCase
+import com.example.olife.domain.usecase.event.*
 import com.example.olife.domain.usecase.note.DeleteNoteUseCase
 import com.example.olife.domain.usecase.note.GetSavedNotesUseCase
 import com.example.olife.domain.usecase.note.SaveNoteUseCase
@@ -109,5 +106,13 @@ class UseCaseModule {//connects with viewModel
         eventsRepository: EventsRepository
     ) : DeleteEventUseCase{
         return DeleteEventUseCase(eventsRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetEventsOnCertainDay(
+        eventsRepository: EventsRepository
+    ) : GetEventsOnCertainDayUseCase{
+        return GetEventsOnCertainDayUseCase(eventsRepository)
     }
 }

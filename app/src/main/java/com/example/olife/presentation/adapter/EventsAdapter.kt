@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.olife.data.model.Event
 import com.example.olife.databinding.EventListItemBinding
+import com.example.olife.utils.CalendarUtils
+import com.example.olife.utils.TimeUtils
 
 class EventsAdapter : RecyclerView.Adapter<EventsAdapter.EventsViewHolder>() {
 
@@ -41,6 +43,14 @@ class EventsAdapter : RecyclerView.Adapter<EventsAdapter.EventsViewHolder>() {
 
     inner class EventsViewHolder(val binding: EventListItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(event: Event){
+
+            binding.cfLiTvEventTitle.text = event.name
+            binding.cfLiTvEventHour.text= event.eventTime?.let { it ->
+                TimeUtils.getStringFromLocalTime(
+                    it
+                )
+            }
+
             binding.root.setOnClickListener {
                 onItemClickListener?.let {
                     it(event)

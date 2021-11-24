@@ -5,19 +5,18 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.example.olife.data.model.Event
-import com.example.olife.domain.usecase.event.DeleteEventUseCase
-import com.example.olife.domain.usecase.event.GetSavedEventsUseCase
-import com.example.olife.domain.usecase.event.SaveEventUseCase
-import com.example.olife.domain.usecase.event.UpdateEventUseCase
+import com.example.olife.domain.usecase.event.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 class EventsViewModel(
     private val app: Application,
     private val saveEventUseCase: SaveEventUseCase,
     private val getSavedEventsUseCase: GetSavedEventsUseCase,
     private val updateEventUseCase: UpdateEventUseCase,
-    private val deleteEventUseCase: DeleteEventUseCase
+    private val deleteEventUseCase: DeleteEventUseCase,
+    private val getEventsOnCertainDayUseCase: GetEventsOnCertainDayUseCase
 ) : AndroidViewModel(app) {
 
     fun saveEvent(event: Event) = viewModelScope.launch {
@@ -38,4 +37,9 @@ class EventsViewModel(
         deleteEventUseCase.execute(event)
     }
 
+    fun getEventsOnCertainDay(localDate: LocalDate) = liveData {
+        getEventsOnCertainDayUseCase.execute(localDate).collect {
+            emit(it)
+        }
+    }
 }

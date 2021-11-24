@@ -2,10 +2,7 @@ package com.example.olife.domain.di
 
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider
-import com.example.olife.domain.usecase.event.DeleteEventUseCase
-import com.example.olife.domain.usecase.event.GetSavedEventsUseCase
-import com.example.olife.domain.usecase.event.SaveEventUseCase
-import com.example.olife.domain.usecase.event.UpdateEventUseCase
+import com.example.olife.domain.usecase.event.*
 import com.example.olife.domain.usecase.note.DeleteNoteUseCase
 import com.example.olife.domain.usecase.note.GetSavedNotesUseCase
 import com.example.olife.domain.usecase.note.SaveNoteUseCase
@@ -55,8 +52,9 @@ class FactoryModule {
         saveEventUseCase: SaveEventUseCase,
         getSavedEventsUseCase: GetSavedEventsUseCase,
         updateEventUseCase: UpdateEventUseCase,
-        deleteEventUseCase: DeleteEventUseCase
+        deleteEventUseCase: DeleteEventUseCase,
+        getEventsOnCertainDayUseCase: GetEventsOnCertainDayUseCase
     ) : EventsViewModelFactory{
-        return EventsViewModelFactory(application,saveEventUseCase, getSavedEventsUseCase, updateEventUseCase, deleteEventUseCase)
+        return EventsViewModelFactory(application,saveEventUseCase, getSavedEventsUseCase, updateEventUseCase, deleteEventUseCase,getEventsOnCertainDayUseCase)
     }
 }
