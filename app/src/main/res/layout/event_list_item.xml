@@ -18,7 +18,7 @@
            android:id="@+id/cf_li_tv_event_title"
            android:layout_width="300dp"
            android:layout_height="40dp"
-           android:hint="Title"
+           android:hint="Event"
            android:textSize="30dp"
            android:textStyle="bold"
            android:textColor="@color/white"
@@ -31,7 +31,7 @@
 
            android:layout_width="wrap_content"
            android:layout_height="40dp"
-           android:hint="24:00"
+           android:hint="00:00"
            android:textSize="30dp"
            android:textStyle="bold"
            android:textColor="@color/white"

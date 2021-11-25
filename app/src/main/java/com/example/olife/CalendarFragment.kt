@@ -1,12 +1,13 @@
 package com.example.olife
 
 import android.os.Bundle
+import android.os.Handler
+
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -18,8 +19,7 @@ import com.example.olife.presentation.adapter.EventsAdapter
 import com.example.olife.presentation.viewmodel.event.EventsViewModel
 import com.example.olife.utils.CalendarUtils
 import java.time.LocalDate
-import java.time.YearMonth
-import java.time.format.DateTimeFormatter
+
 
 
 class CalendarFragment : Fragment() {
@@ -33,6 +33,10 @@ class CalendarFragment : Fragment() {
 
     private lateinit var eventsViewModel : EventsViewModel
     private lateinit var eventsAdapter: EventsAdapter
+
+    init {
+        calendarUtils.selectedDate = LocalDate.now()
+    }
 
 
 
@@ -64,12 +68,28 @@ class CalendarFragment : Fragment() {
 
 
         fragmentCalendarBinding.cfFbAddEvent.setOnClickListener {
+            //Bundle().putString(CalendarUtils.getStringFromLocalDate(CalendarUtils.selectedDate))
             findNavController().navigate(
                 R.id.action_calendarFragment_to_eventFragment
             )
         }
 
+        eventsAdapter.setOnItemClickListener {
+            //val bundle = Bundle().putSerializable("selected_event",it)
+            /*findNavController().navigate(
+                R.id.action_calendarFragment_to_eventFragment,
+                bundle
+            )*/
+        }
+/*
+        fragmentCalendarBinding.cfRvEvents.layoutManager?.on{
+            fragmentCalendarBinding.cfRvEvents.layoutManager?.scrollToPosition(0)
+        }
 
+*/
+        Handler().postDelayed({
+            fragmentCalendarBinding.cfRvEvents.layoutManager?.scrollToPosition(0)
+        },400)
     }
 
     private fun initEventsRecyclerView() {
@@ -82,7 +102,6 @@ class CalendarFragment : Fragment() {
     private fun initCalendarRecyclerView() {
         calendarRecyclerView = fragmentCalendarBinding.cfRvCalendar
         monthYearText = fragmentCalendarBinding.cfTvMonthYear
-        calendarUtils.selectedDate = LocalDate.now()
         setMonthView()
     }
 
@@ -148,3 +167,7 @@ class CalendarFragment : Fragment() {
     }
 
 }
+
+//private fun RecyclerView.LayoutManager?.onItemsChanged(function: () -> Unit?) {
+
+//}
