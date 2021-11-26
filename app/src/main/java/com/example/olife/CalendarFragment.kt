@@ -2,6 +2,7 @@ package com.example.olife
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.olife.data.model.Note
 import com.example.olife.databinding.FragmentCalendarBinding
 import com.example.olife.presentation.adapter.CalendarAdapter
 import com.example.olife.presentation.adapter.EventsAdapter
@@ -75,22 +77,31 @@ class CalendarFragment : Fragment() {
         }
 
         eventsAdapter.setOnItemClickListener {
-            //val bundle = Bundle().putSerializable("selected_event",it)
-            /*findNavController().navigate(
-                R.id.action_calendarFragment_to_eventFragment,
-                bundle
+            /*val bundle = Bundle().putSerializable("selected_event",it)
+            findNavController().navigate(
+                R.id.action_calendarFragment_to_eventFragment,bundle
             )*/
+            Bundle().apply {
+                    putSerializable("selected_event", it)
+                    findNavController().navigate(
+                        R.id.action_calendarFragment_to_eventFragment,
+                        this
+                    )
+                }
         }
 /*
         fragmentCalendarBinding.cfRvEvents.layoutManager?.on{
             fragmentCalendarBinding.cfRvEvents.layoutManager?.scrollToPosition(0)
         }
 
-*/
-        Handler().postDelayed({
+*//*
+        Handler(Looper.getMainLooper()).postDelayed({
             fragmentCalendarBinding.cfRvEvents.layoutManager?.scrollToPosition(0)
-        },400)
+        }, 400)
+
+*/
     }
+
 
     private fun initEventsRecyclerView() {
         fragmentCalendarBinding.cfRvEvents.apply {

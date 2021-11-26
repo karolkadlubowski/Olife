@@ -16,4 +16,4 @@ data class Event (
     var notificationDate : LocalDate?,
     var notificationTime : LocalTime?,
     var description : String?
-        )
+        ) : Serializable
