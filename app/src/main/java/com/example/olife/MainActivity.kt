@@ -28,7 +28,8 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var notesViewModelFactory : NotesViewModelFactory
+    lateinit var notesViewModelFactory: NotesViewModelFactory
+
     @Inject
     lateinit var notesAdapter: NotesAdapter
     lateinit var notesViewModel: NotesViewModel
@@ -36,15 +37,28 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var voiceNotesViewModelFactory: VoiceNotesModelFactory
+
     @Inject//provide in di.adapter
     lateinit var voiceNotesAdapter: VoiceNotesAdapter
     lateinit var voiceNotesViewModel: VoiceNotesViewModel
 
     @Inject
     lateinit var eventsViewModelFactory: EventsViewModelFactory
+
     @Inject
     lateinit var eventsAdapter: EventsAdapter
     lateinit var eventsViewModel: EventsViewModel
+
+    lateinit var todayEventsViewModel: EventsViewModel
+    lateinit var tomorrowEventsViewModel: EventsViewModel
+    lateinit var dayAfterTomorrowEventsViewModel: EventsViewModel
+
+    @Inject
+    lateinit var todayEventsAdapter: EventsAdapter
+    @Inject
+    lateinit var tomorrowEventsAdapter: EventsAdapter
+    @Inject
+    lateinit var dayAfterTomorrowEventsAdapter: EventsAdapter
 
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,15 +71,23 @@ class MainActivity : AppCompatActivity() {
         binding.bnvOlife.setupWithNavController(
             navController
         )
-        notesViewModel = ViewModelProvider(this,notesViewModelFactory)
+        notesViewModel = ViewModelProvider(this, notesViewModelFactory)
             .get(NotesViewModel::class.java)
 
-        voiceNotesViewModel = ViewModelProvider(this,voiceNotesViewModelFactory)
+        voiceNotesViewModel = ViewModelProvider(this, voiceNotesViewModelFactory)
             .get(VoiceNotesViewModel::class.java)
 
-        eventsViewModel = ViewModelProvider(this,eventsViewModelFactory)
+        eventsViewModel = ViewModelProvider(this, eventsViewModelFactory)
             .get(EventsViewModel::class.java)
-       // voiceNotesViewModel.saveVoiceNote(VoiceNote(null,"elo","elo"))
+
+        todayEventsViewModel = ViewModelProvider(this, eventsViewModelFactory)
+            .get(EventsViewModel::class.java)
+        tomorrowEventsViewModel = ViewModelProvider(this, eventsViewModelFactory)
+            .get(EventsViewModel::class.java)
+        dayAfterTomorrowEventsViewModel = ViewModelProvider(this, eventsViewModelFactory)
+            .get(EventsViewModel::class.java)
+
+        // voiceNotesViewModel.saveVoiceNote(VoiceNote(null,"elo","elo"))
 
         //eventsViewModel.saveEvent(Event(null, "Evento",CalendarUtils.getLocalDateFromString("24.11.2021"),TimeUtils.getLocalTimeFromString("09:30"),CalendarUtils.getLocalDateFromString("25.11.2021"),TimeUtils.getLocalTimeFromString("09:30"),"Pomaranczowe"))
     }

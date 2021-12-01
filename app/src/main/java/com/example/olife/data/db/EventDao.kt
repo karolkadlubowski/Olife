@@ -21,4 +21,5 @@ interface EventDao {
 
     @Query("SELECT * FROM events WHERE eventDate = :localDate ORDER BY eventTime ASC")
     fun getEventsOnCertainDay(localDate : LocalDate) : Flow<List<Event>>
+
 }

@@ -25,7 +25,7 @@ class AdapterModule {
         return VoiceNotesAdapter()
     }
 
-    @Singleton
+
     @Provides
     fun provideEventsAdapter():EventsAdapter{
         return EventsAdapter()

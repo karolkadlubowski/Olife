@@ -117,13 +117,13 @@ class EventFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
     private fun getEventDateCalendar() {
         day = mEvent!!.eventDate?.dayOfMonth!!
-        month = mEvent!!.eventDate?.month?.value!!
+        month =mEvent!!.eventDate?.month?.value!!-1
         year = mEvent!!.eventDate?.year!!
     }
 
     private fun getNotificationDateCalendar() {
         day = mEvent!!.notificationDate?.dayOfMonth!!
-        month = mEvent!!.notificationDate?.month?.value!!
+        month = mEvent!!.notificationDate?.month?.value!!-1
         year = mEvent!!.notificationDate?.year!!
 
     }
@@ -160,20 +160,20 @@ class EventFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         fragmentEventBinding.efEtEventTime.setOnClickListener {
             saveToEvent = true
             getEventTime()
-            TimePickerDialog(parentFragment?.context, this, hour, minute, true).show()
+            TimePickerDialog(parentFragment?.context,android.R.style.Theme_Holo_Dialog ,this, hour, minute, true).show()
 
         }
 
         fragmentEventBinding.efEtNotificationTime.setOnClickListener {
             getNotificationTime()
-            TimePickerDialog(parentFragment?.context, this, hour, minute, true).show()
+            TimePickerDialog(parentFragment?.context,android.R.style.Theme_Holo_Dialog, this, hour, minute, true).show()
 
 
         }
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        savedDate = LocalDate.of(year, month, dayOfMonth)
+        savedDate = LocalDate.of(year, month+1, dayOfMonth)
         if (saveToEvent == true) {
             fragmentEventBinding.efEtEventDate.setText(
                 calendarUtils.getStringFromLocalDate(

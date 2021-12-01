@@ -78,9 +78,10 @@ class CalendarAdapter(private val days: ArrayList<LocalDate?>) : RecyclerView.Ad
                    it(dayOfMonth)
                }
            }
+
+
+
         }
-
-
     }
     private var onItemClickListener : ((LocalDate?)->Unit)?=null
 

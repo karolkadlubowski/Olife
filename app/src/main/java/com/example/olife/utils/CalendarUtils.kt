@@ -18,7 +18,16 @@ object CalendarUtils {
         val formatter : DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.ENGLISH)
         return LocalDate.parse(dateString,formatter)
     }
+/*
+    fun getDBFormatDate(date: LocalDate) : String{
+        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH)
+        return date.format(formatter)
+    }
 
+    fun getStringFromDBFormatDate(dateString: String) : LocalDate{
+
+    }
+*/
     fun monthYearFromDate(date: LocalDate): String {
         val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM yyyy", Locale.ENGLISH)
         return date.format(formatter)

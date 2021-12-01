@@ -19,7 +19,7 @@ class DataBaseModule {
     @Singleton
     fun provideDatabase(app : Application) : Database{
         return Room.databaseBuilder(app,Database::class.java,"organiser_database")
-            .fallbackToDestructiveMigration()// w razie konfliktów usuwa i tworzy tabele, uważać na to
+            .fallbackToDestructiveMigration()// in case of conflicts, deletes and creates table
             .build()
     }
 

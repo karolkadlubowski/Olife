@@ -41,7 +41,9 @@ class EventsAdapter : RecyclerView.Adapter<EventsAdapter.EventsViewHolder>() {
     }
 
 
+
     inner class EventsViewHolder(val binding: EventListItemBinding) : RecyclerView.ViewHolder(binding.root){
+
         fun bind(event: Event){
 
             binding.cfLiTvEventTitle.text = event.name

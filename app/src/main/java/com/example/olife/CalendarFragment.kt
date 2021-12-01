@@ -81,7 +81,7 @@ class CalendarFragment : Fragment() {
             findNavController().navigate(
                 R.id.action_calendarFragment_to_eventFragment,bundle
             )*/
-            Bundle().apply {
+           Bundle().apply {
                     putSerializable("selected_event", it)
                     findNavController().navigate(
                         R.id.action_calendarFragment_to_eventFragment,
@@ -89,17 +89,24 @@ class CalendarFragment : Fragment() {
                     )
                 }
         }
+
+        //eventsAdapter.notifyDataSetChanged{fragmentCalendarBinding.cfRvEvents.layoutManager?.scrollToPosition(0)}
+
+        //fragmentCalendarBinding.cfRvEvents.layoutManager?.smoothScrollToPosition(fragmentCalendarBinding.cfRvEvents,fragmentCalendarBinding.cfRvEvents.)
 /*
         fragmentCalendarBinding.cfRvEvents.layoutManager?.on{
             fragmentCalendarBinding.cfRvEvents.layoutManager?.scrollToPosition(0)
         }
 
-*//*
+*/
+
         Handler(Looper.getMainLooper()).postDelayed({
             fragmentCalendarBinding.cfRvEvents.layoutManager?.scrollToPosition(0)
         }, 400)
 
-*/
+
+
+
     }
 
 
