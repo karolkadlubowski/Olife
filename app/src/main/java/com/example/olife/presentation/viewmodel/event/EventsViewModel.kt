@@ -19,6 +19,8 @@ class EventsViewModel(
     private val getEventsOnCertainDayUseCase: GetEventsOnCertainDayUseCase
 ) : AndroidViewModel(app) {
 
+    
+
     fun saveEvent(event: Event) = viewModelScope.launch {
         saveEventUseCase.execute(event)
     }

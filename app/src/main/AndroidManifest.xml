@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+
     <application
         android:requestLegacyExternalStorage="true"
         android:name=".presentation.OlifeApp"
@@ -14,6 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Olife">
+        <receiver android:name=".utils.Notification"
+            android:enabled="true"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

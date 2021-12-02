@@ -1,8 +1,10 @@
 package com.example.olife
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
+import android.app.*
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.text.format.DateFormat
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +16,8 @@ import com.example.olife.data.model.Event
 import com.example.olife.databinding.FragmentEventBinding
 import com.example.olife.presentation.adapter.EventsAdapter
 import com.example.olife.presentation.viewmodel.event.EventsViewModel
-import com.example.olife.utils.CalendarUtils
-import com.example.olife.utils.TimeUtils
+import com.example.olife.utils.*
+import com.example.olife.utils.Notification
 import java.lang.Exception
 import java.time.LocalDate
 import java.time.LocalTime
@@ -101,8 +103,10 @@ class EventFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         fragmentEventBinding.efIbConfirm.setOnClickListener {
             mEvent!!.name = fragmentEventBinding.efEtName.text.toString()
             mEvent!!.description = fragmentEventBinding.efEtDescription.text.toString()
-            if(mEvent!!.id==null)
+            if(mEvent!!.id==null) {
                 eventsViewModel.saveEvent(mEvent!!)
+                scheduleNotification()
+            }
             else
                 eventsViewModel.updateEvent(mEvent!!)
             activity?.onBackPressed()
@@ -113,7 +117,69 @@ class EventFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             activity?.onBackPressed()
         }
 
+       createNotificationChannel()
+
     }
+
+
+    private fun createNotificationChannel() {
+        val name = "Notif Channel"
+        val desc = "A Description of the Channel"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(channelID,name,importance)
+        channel.description = desc
+        val notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
+
+    private fun scheduleNotification(){
+        val intent = Intent(context, Notification::class.java)
+        val title = "Mordo"
+        val message = "Daj mnie cos do zarcia"
+        intent.putExtra(titleExtra,title)
+        intent.putExtra(messageExtra,message)
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            notificationId,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val time = getTime(mEvent!!.notificationDate!!, mEvent!!.notificationTime!!)
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            time,
+            pendingIntent
+        )
+
+        showAlert(time,title,message)
+    }
+
+    private fun showAlert(time: Long, title: String, message: String) {
+        val date = Date(time)
+        val dateFormat = DateFormat.getLongDateFormat(context)
+        val timeFormat = DateFormat.getTimeFormat(context)
+
+        AlertDialog.Builder(context)
+            .setTitle("Notification Scheduled")
+            .setMessage(
+                "Title: " + title +
+                        "\nMessage: " + message +
+                        "\nAt: "+ dateFormat.format(date) + " " +timeFormat.format(date))
+            .setPositiveButton("Okay"){_,_ -> }
+            .show()
+    }
+
+
+    private fun getTime(localDate: LocalDate, localTime: LocalTime):Long{
+        val calendar = Calendar.getInstance()
+        //calendar.set(2021,12,1,23,10)
+        calendar.set(localDate.year,localDate.monthValue-1,localDate.dayOfMonth,localTime.hour,localTime.minute,1)
+        return calendar.timeInMillis
+    }
+
 
     private fun getEventDateCalendar() {
         day = mEvent!!.eventDate?.dayOfMonth!!
