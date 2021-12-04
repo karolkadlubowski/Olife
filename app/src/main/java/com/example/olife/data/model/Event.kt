@@ -9,7 +9,7 @@ import java.time.LocalTime
 @Entity(tableName = "events")
 data class Event (
     @PrimaryKey(autoGenerate = true)
-    val id: Int?,
+    var id: Int?,
     var name : String?,
     var eventDate : LocalDate?,
     var eventTime : LocalTime?,

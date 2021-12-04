@@ -1,34 +1,25 @@
 package com.example.olife
 
-import android.app.*
-import android.content.Context
-import android.content.Context.NOTIFICATION_SERVICE
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.format.DateFormat
 
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.olife.data.model.Note
 import com.example.olife.databinding.FragmentCalendarBinding
 import com.example.olife.presentation.adapter.CalendarAdapter
 import com.example.olife.presentation.adapter.EventsAdapter
 import com.example.olife.presentation.viewmodel.event.EventsViewModel
 import com.example.olife.utils.*
-import com.example.olife.utils.Notification
 import java.time.LocalDate
-import java.util.*
 
 
 class CalendarFragment : Fragment() {
@@ -39,6 +30,8 @@ class CalendarFragment : Fragment() {
     //private lateinit var selectedDate: LocalDate
 
     private val calendarUtils = CalendarUtils
+    private val notificationUtils = EventNotificationUtils
+
 
     private lateinit var eventsViewModel : EventsViewModel
     private lateinit var eventsAdapter: EventsAdapter
@@ -182,6 +175,8 @@ class CalendarFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val event = eventsAdapter.differ.currentList[viewHolder.adapterPosition]
                 eventsViewModel.deleteEvent(event)
+                notificationUtils.createEventNotificationChannel(context!!)
+                notificationUtils.deleteNotification(context!!,event)
             }
 
 
@@ -190,6 +185,3 @@ class CalendarFragment : Fragment() {
 
 }
 
-//private fun RecyclerView.LayoutManager?.onItemsChanged(function: () -> Unit?) {
-
-//}

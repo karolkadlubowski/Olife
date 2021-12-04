@@ -115,4 +115,5 @@ class UseCaseModule {//connects with viewModel
     ) : GetEventsOnCertainDayUseCase{
         return GetEventsOnCertainDayUseCase(eventsRepository)
     }
+
 }

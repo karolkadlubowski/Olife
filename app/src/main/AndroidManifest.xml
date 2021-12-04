@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Olife">
-        <receiver android:name=".utils.Notification"
+        <receiver android:name=".utils.EventNotification"
             android:enabled="true"/>
         <activity
             android:name=".MainActivity"

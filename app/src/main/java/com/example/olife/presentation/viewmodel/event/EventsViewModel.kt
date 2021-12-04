@@ -1,14 +1,17 @@
 package com.example.olife.presentation.viewmodel.event
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import androidx.lifecycle.*
 import com.example.olife.data.model.Event
 import com.example.olife.domain.usecase.event.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
+import kotlin.math.absoluteValue
 
 class EventsViewModel(
     private val app: Application,
@@ -19,11 +22,7 @@ class EventsViewModel(
     private val getEventsOnCertainDayUseCase: GetEventsOnCertainDayUseCase
 ) : AndroidViewModel(app) {
 
-    
-
-    fun saveEvent(event: Event) = viewModelScope.launch {
-        saveEventUseCase.execute(event)
-    }
+    suspend fun saveEvent(event: Event) : Long = saveEventUseCase.execute(event)
 
     fun getSavedEvents() = liveData {
         getSavedEventsUseCase.execute().collect {
@@ -44,4 +43,5 @@ class EventsViewModel(
             emit(it)
         }
     }
+
 }

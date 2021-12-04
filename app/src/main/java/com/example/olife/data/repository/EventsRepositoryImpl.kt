@@ -1,5 +1,6 @@
 package com.example.olife.data.repository
 
+import android.util.Log
 import com.example.olife.data.model.Event
 import com.example.olife.data.repository.dataSource.EventsLocalDataSource
 import com.example.olife.domain.repository.EventsRepository
@@ -7,11 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
 class EventsRepositoryImpl(
-    private val eventsLocalDataSource : EventsLocalDataSource
+    private val eventsLocalDataSource: EventsLocalDataSource
 ) : EventsRepository {
-    override suspend fun saveEvent(event: Event) {
-        eventsLocalDataSource.saveEventToDB(event)
-    }
+    override suspend fun saveEvent(event: Event): Long = eventsLocalDataSource.saveEventToDB(event)
 
     override fun getSavedEvents(): Flow<List<Event>> {
         return eventsLocalDataSource.getSavedEvents()

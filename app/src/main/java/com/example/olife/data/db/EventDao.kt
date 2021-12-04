@@ -8,7 +8,7 @@ import java.time.LocalDate
 @Dao
 interface EventDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertEvent(event:Event)
+    suspend fun insertEvent(event:Event) : Long
 
     @Query("SELECT * FROM events ORDER BY id ASC")
     fun getAllEvents(): Flow<List<Event>>
