@@ -19,7 +19,8 @@ class EventsViewModel(
     private val getSavedEventsUseCase: GetSavedEventsUseCase,
     private val updateEventUseCase: UpdateEventUseCase,
     private val deleteEventUseCase: DeleteEventUseCase,
-    private val getEventsOnCertainDayUseCase: GetEventsOnCertainDayUseCase
+    private val getEventsOnCertainDayUseCase: GetEventsOnCertainDayUseCase,
+    private val getEventsAtCertainWeekUseCase: GetEventsAtCertainWeekUseCase
 ) : AndroidViewModel(app) {
 
     suspend fun saveEvent(event: Event) : Long = saveEventUseCase.execute(event)
@@ -44,4 +45,10 @@ class EventsViewModel(
         }
     }
 
+    fun getEventsAtCertainWeek(localDate: LocalDate) = liveData {
+        getEventsAtCertainWeekUseCase.execute(localDate).collect {
+            localDate.plusDays(7)
+            emit(it)
+        }
+    }
 }

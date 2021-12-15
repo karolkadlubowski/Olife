@@ -26,4 +26,8 @@ class EventsLocalDataSourceImpl(private val eventDao: EventDao) : EventsLocalDat
         return eventDao.getEventsOnCertainDay(localDate)
     }
 
+    override fun getEventsAtCertainWeek(localDate:LocalDate): Flow<List<Event>> {
+        return  eventDao.getEventsAtCurrentWeek(localDate,localDate.plusDays(7))
+    }
+
 }

@@ -27,4 +27,8 @@ class EventsRepositoryImpl(
     override fun getEventsOnCertainDay(localDate: LocalDate): Flow<List<Event>> {
         return eventsLocalDataSource.getEventsOnCertainDay(localDate)
     }
+
+    override fun getEventsAtCertainWeek(localDate: LocalDate): Flow<List<Event>> {
+        return eventsLocalDataSource.getEventsAtCertainWeek(localDate)
+    }
 }

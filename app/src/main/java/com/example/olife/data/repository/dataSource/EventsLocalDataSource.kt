@@ -10,4 +10,5 @@ interface EventsLocalDataSource {
     suspend fun updateEvent(event: Event)
     suspend fun deleteEvent(event: Event)
     fun getEventsOnCertainDay(localDate : LocalDate) : Flow<List<Event>>
+    fun getEventsAtCertainWeek(localDate:LocalDate) : Flow<List<Event>>
 }

@@ -1,8 +1,13 @@
 package com.example.olife.domain.di
 
+import com.example.olife.domain.repository.AlarmsRepository
 import com.example.olife.domain.repository.EventsRepository
 import com.example.olife.domain.repository.NotesRepository
 import com.example.olife.domain.repository.VoiceNotesRepository
+import com.example.olife.domain.usecase.alarm.DeleteAlarmUseCase
+import com.example.olife.domain.usecase.alarm.GetSavedAlarmsUseCase
+import com.example.olife.domain.usecase.alarm.SaveAlarmUseCase
+import com.example.olife.domain.usecase.alarm.UpdateAlarmUseCase
 import com.example.olife.domain.usecase.event.*
 import com.example.olife.domain.usecase.note.DeleteNoteUseCase
 import com.example.olife.domain.usecase.note.GetSavedNotesUseCase
@@ -116,4 +121,33 @@ class UseCaseModule {//connects with viewModel
         return GetEventsOnCertainDayUseCase(eventsRepository)
     }
 
+    @Singleton
+    @Provides
+    fun provideGetEventsAtCertainWeek(
+        eventsRepository: EventsRepository
+    ) : GetEventsAtCertainWeekUseCase = GetEventsAtCertainWeekUseCase(eventsRepository)
+
+    @Singleton
+    @Provides
+    fun provideSaveAlarmUseCase(
+        alarmsRepository: AlarmsRepository
+    ) : SaveAlarmUseCase = SaveAlarmUseCase(alarmsRepository)
+
+    @Singleton
+    @Provides
+    fun provideGetSavedAlarmsUseCase(
+    alarmsRepository : AlarmsRepository
+    ) : GetSavedAlarmsUseCase = GetSavedAlarmsUseCase(alarmsRepository)
+
+    @Singleton
+    @Provides
+    fun provideUpdateAlarmsUseCase(
+        alarmsRepository: AlarmsRepository
+    ) : UpdateAlarmUseCase = UpdateAlarmUseCase(alarmsRepository)
+
+    @Singleton
+    @Provides
+    fun provideDeleteAlarmsUseCase(
+        alarmsRepository: AlarmsRepository
+    ) : DeleteAlarmUseCase = DeleteAlarmUseCase(alarmsRepository)
 }

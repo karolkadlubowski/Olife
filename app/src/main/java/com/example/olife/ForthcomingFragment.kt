@@ -1,6 +1,7 @@
 package com.example.olife
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,9 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.olife.databinding.FragmentForthcomingBinding
+import com.example.olife.presentation.adapter.AlarmsAdapter
 import com.example.olife.presentation.adapter.EventsAdapter
+import com.example.olife.presentation.viewmodel.alarm.AlarmsViewModel
 import com.example.olife.presentation.viewmodel.event.EventsViewModel
 import com.example.olife.utils.CalendarUtils
 import java.time.LocalDate
@@ -21,13 +24,21 @@ class ForthcomingFragment : Fragment() {
 
     private lateinit var fragmentForthcomingBinding: FragmentForthcomingBinding
 
-    private lateinit var todayEventsViewModel : EventsViewModel
+    private lateinit var forthcomingEventsViewModel : EventsViewModel
+
+    private lateinit var forthcomingEventsAdapter : EventsAdapter
+
+    private lateinit var alarmsAdapter: AlarmsAdapter
+
+    private lateinit var alarmsViewModel : AlarmsViewModel
+
+ /*   private lateinit var todayEventsViewModel : EventsViewModel
     private lateinit var tomorrowEventsViewModel: EventsViewModel
     private lateinit var dayAfterTomorrowEventsViewModel: EventsViewModel
 
     private lateinit var todayEventsAdapter : EventsAdapter
     private lateinit var tomorrowEventsAdapter: EventsAdapter
-    private lateinit var dayAfterTomorrowEventsAdapter : EventsAdapter
+    private lateinit var dayAfterTomorrowEventsAdapter : EventsAdapter*/
 
 
     override fun onCreateView(
@@ -40,7 +51,7 @@ class ForthcomingFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        if(todayEventsAdapter.differ.currentList.isEmpty())
+        /*if(todayEventsAdapter.differ.currentList.isEmpty())
             fragmentForthcomingBinding.ffLlToday.visibility=View.GONE
         else
             fragmentForthcomingBinding.ffLlToday.visibility=View.VISIBLE
@@ -50,13 +61,27 @@ class ForthcomingFragment : Fragment() {
         else
             fragmentForthcomingBinding.ffLlTomorrow.visibility=View.VISIBLE
 
-        fragmentForthcomingBinding.ffLlDayAfterTomorrow.visibility = if(dayAfterTomorrowEventsAdapter.differ.currentList.isEmpty()) View.GONE else View.VISIBLE
+        fragmentForthcomingBinding.ffLlDayAfterTomorrow.visibility = if(dayAfterTomorrowEventsAdapter.differ.currentList.isEmpty()) View.GONE else View.VISIBLE*/
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         fragmentForthcomingBinding = FragmentForthcomingBinding.bind(view)
+        forthcomingEventsViewModel = (activity as MainActivity).forthcomingEventsViewModel
+        forthcomingEventsAdapter = (activity as MainActivity).forthcomingEventsAdapter
 
+        alarmsAdapter = (activity as MainActivity).alarmsAdapter
+        alarmsViewModel = (activity as MainActivity).alarmsViewModel
+
+
+        initForthcomingRecyclerView()
+        initAlarmsRecyclerView()
+
+        setAlarmListItemTouchHelper()
+
+
+
+/*
         todayEventsViewModel = (activity as MainActivity).todayEventsViewModel
         tomorrowEventsViewModel = (activity as MainActivity).tomorrowEventsViewModel
         dayAfterTomorrowEventsViewModel = (activity as MainActivity).dayAfterTomorrowEventsViewModel
@@ -69,7 +94,7 @@ class ForthcomingFragment : Fragment() {
         initTodayRecyclerView()
         initTomorrowRecyclerView()
         initDayAfterTomorrowRecyclerView()
-
+*/
         //setTodayEventListItemTouchHelper()
 
       /*  todayEventsAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
@@ -101,8 +126,54 @@ class ForthcomingFragment : Fragment() {
        */
     }
 
+    private fun initAlarmsRecyclerView() {
+        fragmentForthcomingBinding.ffRvAlarms.apply{
+            adapter=alarmsAdapter
+            layoutManager = LinearLayoutManager(activity,RecyclerView.VERTICAL,false)
+        }
+        alarmsViewModel.getSavedAlarms().observe(viewLifecycleOwner,{
+            alarmsAdapter.differ.submitList(it)
+        })
+    }
+
+    private fun initForthcomingRecyclerView() {
+        fragmentForthcomingBinding.ffRvForthcomingEvents.apply {
+            adapter = forthcomingEventsAdapter
+            layoutManager = LinearLayoutManager(activity,RecyclerView.VERTICAL,false)
+        }
+
+        forthcomingEventsViewModel.getEventsAtCertainWeek(LocalDate.now()).observe(viewLifecycleOwner,{
+            forthcomingEventsAdapter.differ.submitList(it)
+        })
+    }
+
+    private fun setAlarmListItemTouchHelper(){
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                //up and down so now
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                /*val alarm = eventsAdapter.differ.currentList[viewHolder.adapterPosition]
+                eventsViewModel.deleteEvent(event)
+                notificationUtils.createEventNotificationChannel(context!!)
+                notificationUtils.deleteNotification(context!!,event)*/
+            }
 
 
+        }).attachToRecyclerView(fragmentForthcomingBinding.ffRvAlarms)
+    }
+
+
+/*
     private fun initTodayRecyclerView(){
         fragmentForthcomingBinding.ffRvTodayEvents.apply {
             adapter = todayEventsAdapter
@@ -140,7 +211,7 @@ class ForthcomingFragment : Fragment() {
 
 
         })
-    }
+    }*/
 /*
     private fun setTodayEventListItemTouchHelper(){
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(

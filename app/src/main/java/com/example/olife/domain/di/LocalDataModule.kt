@@ -1,12 +1,15 @@
 package com.example.olife.domain.di
 
+import com.example.olife.data.db.AlarmDao
 import com.example.olife.data.db.EventDao
 import com.example.olife.data.db.NoteDao
 import com.example.olife.data.db.VoiceNoteDao
 import com.example.olife.data.model.VoiceNote
+import com.example.olife.data.repository.dataSource.AlarmsLocalDataSource
 import com.example.olife.data.repository.dataSource.EventsLocalDataSource
 import com.example.olife.data.repository.dataSource.NotesLocalDataSource
 import com.example.olife.data.repository.dataSource.VoiceNotesLocalDataSource
+import com.example.olife.data.repository.dataSourceImpl.AlarmsLocalDataSourceImpl
 import com.example.olife.data.repository.dataSourceImpl.EventsLocalDataSourceImpl
 import com.example.olife.data.repository.dataSourceImpl.NotesLocalDataSourceImpl
 import com.example.olife.data.repository.dataSourceImpl.VoiceNotesLocalDataSourceImpl
@@ -36,4 +39,8 @@ class LocalDataModule {
     fun provideEventsLocalDataSource(eventDao: EventDao) : EventsLocalDataSource{
         return EventsLocalDataSourceImpl(eventDao)
     }
+
+    @Singleton
+    @Provides
+    fun provideAlarmsLocalDataSource(alarmDao: AlarmDao) : AlarmsLocalDataSource = AlarmsLocalDataSourceImpl(alarmDao)
 }

@@ -14,7 +14,8 @@ class EventsViewModelFactory(
     private val getSavedEventsUseCase: GetSavedEventsUseCase,
     private val updateEventUseCase: UpdateEventUseCase,
     private val deleteEventUseCase: DeleteEventUseCase,
-    private val getEventsOnCertainDayUseCase: GetEventsOnCertainDayUseCase
+    private val getEventsOnCertainDayUseCase: GetEventsOnCertainDayUseCase,
+    private val getEventsAtCertainWeekUseCase: GetEventsAtCertainWeekUseCase
 ) : ViewModelProvider.Factory{
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return EventsViewModel(
@@ -23,7 +24,8 @@ class EventsViewModelFactory(
             getSavedEventsUseCase,
             updateEventUseCase,
             deleteEventUseCase,
-            getEventsOnCertainDayUseCase
+            getEventsOnCertainDayUseCase,
+            getEventsAtCertainWeekUseCase
         ) as T
     }
 

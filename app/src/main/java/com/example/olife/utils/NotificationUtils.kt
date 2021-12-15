@@ -41,8 +41,6 @@ class EventNotification : BroadcastReceiver() {
 }
 
 object EventNotificationUtils {
-
-
     init {
         //createEventNotificationChannel()
     }
@@ -143,6 +141,7 @@ fun scheduleNotification(context: Context,mEvent:Event) {
             localTime.minute,
             1
         )
+
         return calendar.timeInMillis
     }
 

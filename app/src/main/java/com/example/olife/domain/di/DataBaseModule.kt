@@ -2,10 +2,7 @@ package com.example.olife.domain.di
 
 import android.app.Application
 import androidx.room.Room
-import com.example.olife.data.db.Database
-import com.example.olife.data.db.EventDao
-import com.example.olife.data.db.NoteDao
-import com.example.olife.data.db.VoiceNoteDao
+import com.example.olife.data.db.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,5 +36,11 @@ class DataBaseModule {
     @Provides
     fun provideEventDao(database: Database) : EventDao{
         return database.getEventDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideAlarmDao(database: Database) : AlarmDao{
+        return database.getAlarmDao()
     }
 }

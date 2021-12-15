@@ -10,12 +10,12 @@ object CalendarUtils {
     public lateinit var selectedDate: LocalDate
 
     fun getStringFromLocalDate(date: LocalDate): String {
-        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.ENGLISH)
+        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH)
         return date.format(formatter)
     }
 
     fun getLocalDateFromString(dateString: String) : LocalDate{
-        val formatter : DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.ENGLISH)
+        val formatter : DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH)
         return LocalDate.parse(dateString,formatter)
     }
 /*

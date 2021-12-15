@@ -1,6 +1,7 @@
 package com.example.olife.domain.di
 
 import com.example.olife.data.model.Note
+import com.example.olife.presentation.adapter.AlarmsAdapter
 import com.example.olife.presentation.adapter.EventsAdapter
 import com.example.olife.presentation.adapter.NotesAdapter
 import com.example.olife.presentation.adapter.VoiceNotesAdapter
@@ -29,5 +30,11 @@ class AdapterModule {
     @Provides
     fun provideEventsAdapter():EventsAdapter{
         return EventsAdapter()
+    }
+
+    @Singleton
+    @Provides
+    fun provideAlarmsAdapter():AlarmsAdapter{
+        return AlarmsAdapter()
     }
 }
