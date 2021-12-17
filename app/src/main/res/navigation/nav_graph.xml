@@ -27,7 +27,11 @@
         android:id="@+id/forthcomingFragment"
         android:name="com.example.olife.ForthcomingFragment"
         android:label="fragment_forthcoming"
-        tools:layout="@layout/fragment_forthcoming" />
+        tools:layout="@layout/fragment_forthcoming" >
+        <action
+            android:id="@+id/action_forthcomingFragment_to_alarmFragment"
+            app:destination="@id/alarmFragment" />
+    </fragment>
     <fragment
         android:id="@+id/noteInfoFragment"
         android:name="com.example.olife.NoteInfoFragment"
@@ -51,4 +55,9 @@
 
 
     </fragment>
+    <fragment
+        android:id="@+id/alarmFragment"
+        android:name="com.example.olife.AlarmFragment"
+        android:label="fragment_alarm"
+        tools:layout="@layout/fragment_alarm" />
 </navigation>
