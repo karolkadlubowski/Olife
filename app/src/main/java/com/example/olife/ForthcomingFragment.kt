@@ -85,6 +85,14 @@ class ForthcomingFragment : Fragment() {
         }*/
 
         alarmsAdapter.setOnItemClickListener {
+            //alarmsAdapter.
+            Bundle().apply {
+                putSerializable("selected_alarm",it)
+                findNavController().navigate(R.id.action_forthcomingFragment_to_alarmFragment,this)
+            }
+        }
+
+        fragmentForthcomingBinding.ffIbAddAlarm.setOnClickListener {
             findNavController().navigate(R.id.action_forthcomingFragment_to_alarmFragment)
         }
 

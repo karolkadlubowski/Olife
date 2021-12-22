@@ -104,12 +104,14 @@ class MainActivity : AppCompatActivity() {
         forthcomingEventsViewModel = ViewModelProvider(this, eventsViewModelFactory)
             .get(EventsViewModel::class.java)
 
-        alarmsViewModel =
-            ViewModelProvider(this, alarmsViewModelFactory).get(AlarmsViewModel::class.java)
+        alarmsViewModel = ViewModelProvider(this, alarmsViewModelFactory).get(AlarmsViewModel::class.java)
+        alarmsAdapter.alarmsViewModel=alarmsViewModel
 
-        /*GlobalScope.launch {
-            alarmsViewModel.saveAlarm(Alarm(null,"Mordo", LocalTime.now(),true,"",true))
-            alarmsViewModel.saveAlarm(Alarm(null,"Zaluj", LocalTime.now(),true,"",false))
+        //alarmsAdapter= AlarmsAdapter(alarmsViewModel)
+
+       /* GlobalScope.launch {
+            alarmsViewModel.saveAlarm(Alarm(null,"Mordo", LocalTime.now(),true,false,"",true))
+            alarmsViewModel.saveAlarm(Alarm(null,"Zaluj", LocalTime.now(),true,true,"",false))
         }*/
 
 /*

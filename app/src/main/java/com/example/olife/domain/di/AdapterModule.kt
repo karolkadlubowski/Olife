@@ -5,6 +5,7 @@ import com.example.olife.presentation.adapter.AlarmsAdapter
 import com.example.olife.presentation.adapter.EventsAdapter
 import com.example.olife.presentation.adapter.NotesAdapter
 import com.example.olife.presentation.adapter.VoiceNotesAdapter
+import com.example.olife.presentation.viewmodel.alarm.AlarmsViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -11,7 +11,7 @@ class AlarmsLocalDataSourceImpl(private val alarmDao: AlarmDao) : AlarmsLocalDat
 
     override fun getSavedAlarms(): Flow<List<Alarm>> = alarmDao.getAll()
 
-    override suspend fun updateAlarm(alarm: Alarm) = alarmDao.delete(alarm)
+    override suspend fun updateAlarm(alarm: Alarm) = alarmDao.update(alarm)
 
     override suspend fun deleteAlarm(alarm: Alarm) = alarmDao.delete(alarm)
 }

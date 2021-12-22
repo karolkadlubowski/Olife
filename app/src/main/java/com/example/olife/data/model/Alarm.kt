@@ -12,6 +12,7 @@ data class Alarm(
     var title : String?,
     var time : LocalTime?,
     var repeat : Boolean?,
+    var vibration : Boolean?,
     var soundMemoryLocation : String?,
     var isTurnedOn : Boolean?
 ) : Serializable

@@ -25,4 +25,9 @@
 <!--        <item name="android:textColorSecondaryInverse">@color/white</item>-->
 <!--    </style>-->
 
+    <style name="TimePickerStyle" parent="@android:style/Theme.Holo.Light">
+        ....
+        <item name="android:textColorPrimary">#ffffff</item>
+    </style>
+
 </resources>

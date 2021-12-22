@@ -162,12 +162,12 @@ class EventFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         fragmentEventBinding.efEtEventDate.setOnClickListener {
             saveToEvent = true
             getEventDateCalendar()
-            parentFragment?.context?.let { DatePickerDialog(it, this, year, month, day).show() }
+            parentFragment?.context?.let { DatePickerDialog(it,android.R.style.Theme_Holo_Dialog, this, year, month, day).show() }
         }
 
         fragmentEventBinding.efEtNotificationDate.setOnClickListener {
             getNotificationDateCalendar()
-            parentFragment?.context?.let { DatePickerDialog(it, this, year, month, day).show() }
+            parentFragment?.context?.let { DatePickerDialog(it,android.R.style.Theme_Holo_Dialog, this, year, month, day).show() }
         }
     }
 

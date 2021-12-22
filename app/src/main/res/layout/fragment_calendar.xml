@@ -16,8 +16,8 @@
             android:id="@+id/cd_ll_days_of_week"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginTop="10dp"
+            android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
@@ -151,8 +151,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cf_rv_calendar" />
 
@@ -166,9 +166,10 @@
         android:layout_margin="16dp"
         android:backgroundTint="@color/LightGreen3"
         android:contentDescription="lol"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:tint="@color/white" />
 </androidx.constraintlayout.widget.ConstraintLayout>

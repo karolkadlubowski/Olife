@@ -59,5 +59,11 @@
         android:id="@+id/alarmFragment"
         android:name="com.example.olife.AlarmFragment"
         android:label="fragment_alarm"
-        tools:layout="@layout/fragment_alarm" />
+        tools:layout="@layout/fragment_alarm" >
+        <argument
+            android:name="selected_alarm"
+            app:argType="com.example.olife.data.model.Alarm"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>

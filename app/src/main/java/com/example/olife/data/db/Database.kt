@@ -14,7 +14,7 @@ import com.example.olife.data.model.VoiceNote
         VoiceNote::class,
         Event::class,
         Alarm::class
-    ], version = 6, exportSchema = false
+    ], version = 7, exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class Database : RoomDatabase() {
