@@ -1,6 +1,7 @@
 package com.example.olife.presentation.adapter
 
 import android.app.Activity
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.example.olife.data.model.Alarm
 import com.example.olife.databinding.AlarmListItemBinding
 import com.example.olife.presentation.viewmodel.alarm.AlarmsViewModel
 import com.example.olife.presentation.viewmodel.alarm.AlarmsViewModelFactory
+import com.example.olife.utils.AlarmUtils
 import com.example.olife.utils.TimeUtils
 import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlinx.coroutines.GlobalScope
@@ -24,6 +26,10 @@ import javax.inject.Inject
 class AlarmsAdapter() : RecyclerView.Adapter<AlarmsAdapter.AlarmsViewHolder>() {
 
     lateinit var alarmsViewModel : AlarmsViewModel
+
+    var alarmUtils = AlarmUtils
+
+    private lateinit var context : Context
 
     private val callback = object : DiffUtil.ItemCallback<Alarm>(){
         override fun areItemsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
@@ -42,7 +48,7 @@ class AlarmsAdapter() : RecyclerView.Adapter<AlarmsAdapter.AlarmsViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmsViewHolder {
        val binding = AlarmListItemBinding
            .inflate(LayoutInflater.from(parent.context),parent,false)
-
+        context = parent.context
         return AlarmsViewHolder(binding)
     }
 
@@ -55,7 +61,17 @@ class AlarmsAdapter() : RecyclerView.Adapter<AlarmsAdapter.AlarmsViewHolder>() {
         holder.binding.liSwAlarmSwitch.setOnClickListener {
             alarm.isTurnedOn=holder.binding.liSwAlarmSwitch.isChecked
             alarmsViewModel.updateAlarm(alarm)
+
+            if(alarm.isTurnedOn==true){
+                alarmUtils.createAlarmNotificationChannel(context!!)
+                alarmUtils.scheduleAlarm(context!!,alarm!!)
+            }else{
+                alarmUtils.createAlarmNotificationChannel(context)
+                alarmUtils.cancelAlarm(context!!,alarm)
+            }
         }
+
+
 
     }
 
@@ -75,6 +91,8 @@ class AlarmsAdapter() : RecyclerView.Adapter<AlarmsAdapter.AlarmsViewHolder>() {
             binding.liTvAlarmRepeat.text = if(alarm.repeat!!) "Everyday" else " Only once"
             binding.liTvAlarmTime.text = timeUtils.getStringFromLocalTime(alarm.time!!)
             binding.liTvAlarmTitle.text = alarm.title!!
+
+
 
             binding.root.setOnClickListener {
                 onItemClickListener?.let {

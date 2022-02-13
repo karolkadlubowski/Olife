@@ -124,7 +124,7 @@ fun scheduleNotification(context: Context,mEvent:Event) {
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val time = getTime(mEvent!!.notificationDate!!, mEvent!!.notificationTime!!)
         alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
+            AlarmManager.RTC,
             time,
             pendingIntent
         )

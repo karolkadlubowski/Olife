@@ -82,6 +82,12 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
             alarmUtils.vibe.vibrate(pattern,0)
         }
 
+        if(mAlarm.repeat!!)
+        {
+            alarmUtils.createAlarmNotificationChannel(context!!)
+            alarmUtils.scheduleAlarm(context!!,mAlarm!!)
+        }
+
 
         alarmUtils.mediaPlayer.start()
 
@@ -128,7 +134,7 @@ object AlarmUtils{
         val time = getTime(mAlarm.time!!) //
             //EventNotificationUtils.getTime(mEvent!!.notificationDate!!, mEvent!!.notificationTime!!)
         alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
+            AlarmManager.RTC,
             time,
             pendingIntent
         )
@@ -146,6 +152,18 @@ object AlarmUtils{
             calendar.add(Calendar.DAY_OF_MONTH,1)
 
         return calendar.timeInMillis
+    }
+
+    fun cancelAlarm(context: Context, mAlarm: Alarm){
+        val intent = Intent(context, AlarmBroadcastReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            mAlarm.id!!,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.cancel(pendingIntent)
     }
 
 

@@ -1,12 +1,10 @@
 package com.example.olife
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleObserver
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,10 +14,8 @@ import com.example.olife.presentation.adapter.AlarmsAdapter
 import com.example.olife.presentation.adapter.EventsAdapter
 import com.example.olife.presentation.viewmodel.alarm.AlarmsViewModel
 import com.example.olife.presentation.viewmodel.event.EventsViewModel
-import com.example.olife.utils.CalendarUtils
+import com.example.olife.utils.AlarmUtils
 import java.time.LocalDate
-import java.time.temporal.WeekFields
-import java.util.*
 
 class ForthcomingFragment : Fragment() {
 
@@ -32,6 +28,8 @@ class ForthcomingFragment : Fragment() {
     private lateinit var alarmsAdapter: AlarmsAdapter
 
     private lateinit var alarmsViewModel : AlarmsViewModel
+
+    private var alarmUtils = AlarmUtils
 
  /*   private lateinit var todayEventsViewModel : EventsViewModel
     private lateinit var tomorrowEventsViewModel: EventsViewModel
@@ -90,6 +88,7 @@ class ForthcomingFragment : Fragment() {
                 putSerializable("selected_alarm",it)
                 findNavController().navigate(R.id.action_forthcomingFragment_to_alarmFragment,this)
             }
+
         }
 
         fragmentForthcomingBinding.ffIbAddAlarm.setOnClickListener {
@@ -183,6 +182,11 @@ class ForthcomingFragment : Fragment() {
                 eventsViewModel.deleteEvent(event)
                 notificationUtils.createEventNotificationChannel(context!!)
                 notificationUtils.deleteNotification(context!!,event)*/
+
+                val alarm = alarmsAdapter.differ.currentList[viewHolder.adapterPosition]
+                alarmsViewModel.deleteAlarm(alarm)
+                alarmUtils.createAlarmNotificationChannel(context!!)
+                alarmUtils.cancelAlarm(context!!,alarm)
             }
 
 

@@ -123,6 +123,10 @@ class AlarmFragment : Fragment() {
                     }
                 } else {
                     alarmsViewModel.updateAlarm(mAlarm!!)
+                    var alarmUtils = AlarmUtils
+                    alarmUtils.createAlarmNotificationChannel(context!!)
+                    alarmUtils.cancelAlarm(context!!,mAlarm!!)
+                    alarmUtils.scheduleAlarm(context!!,mAlarm!!)
                     activity?.onBackPressed()
                 }
             }
