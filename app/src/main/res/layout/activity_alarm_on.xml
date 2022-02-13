@@ -8,7 +8,6 @@
     tools:context=".AlarmOnActivity">
 
 
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/aa_turn_off_alarm"
         android:layout_width="300dp"

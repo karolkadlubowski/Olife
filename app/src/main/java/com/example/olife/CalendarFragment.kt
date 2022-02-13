@@ -27,20 +27,18 @@ class CalendarFragment : Fragment() {
     private lateinit var monthYearText: TextView
     private lateinit var calendarRecyclerView: RecyclerView
     private lateinit var calendarAdapter: CalendarAdapter
-    //private lateinit var selectedDate: LocalDate
 
     private val calendarUtils = CalendarUtils
     private val notificationUtils = EventNotificationUtils
 
 
-    private lateinit var eventsViewModel : EventsViewModel
+    private lateinit var eventsViewModel: EventsViewModel
     private lateinit var eventsAdapter: EventsAdapter
 
 
     init {
         calendarUtils.selectedDate = LocalDate.now()
     }
-
 
 
     override fun onCreateView(
@@ -53,7 +51,6 @@ class CalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //calendarRecyclerView.height=fragmentCalendarBinding.
         fragmentCalendarBinding = FragmentCalendarBinding.bind(view)
 
         eventsViewModel = (activity as MainActivity).eventsViewModel
@@ -65,41 +62,30 @@ class CalendarFragment : Fragment() {
         initCalendarRecyclerView()
 
 
-        fragmentCalendarBinding.cfBtMonthBefore.setOnClickListener { previousMonthAction(monthYearText) }
+        fragmentCalendarBinding.cfBtMonthBefore.setOnClickListener {
+            previousMonthAction(
+                monthYearText
+            )
+        }
         fragmentCalendarBinding.cfBtMonthAfter.setOnClickListener { nextMonthAction(monthYearText) }
 
 
 
         fragmentCalendarBinding.cfFbAddEvent.setOnClickListener {
-            //Bundle().putString(CalendarUtils.getStringFromLocalDate(CalendarUtils.selectedDate))
             findNavController().navigate(
                 R.id.action_calendarFragment_to_eventFragment
             )
         }
 
         eventsAdapter.setOnItemClickListener {
-            /*val bundle = Bundle().putSerializable("selected_event",it)
-            findNavController().navigate(
-                R.id.action_calendarFragment_to_eventFragment,bundle
-            )*/
-           Bundle().apply {
-                    putSerializable("selected_event", it)
-                    findNavController().navigate(
-                        R.id.action_calendarFragment_to_eventFragment,
-                        this
-                    )
-                }
+            Bundle().apply {
+                putSerializable("selected_event", it)
+                findNavController().navigate(
+                    R.id.action_calendarFragment_to_eventFragment,
+                    this
+                )
+            }
         }
-
-        //eventsAdapter.notifyDataSetChanged{fragmentCalendarBinding.cfRvEvents.layoutManager?.scrollToPosition(0)}
-
-        //fragmentCalendarBinding.cfRvEvents.layoutManager?.smoothScrollToPosition(fragmentCalendarBinding.cfRvEvents,fragmentCalendarBinding.cfRvEvents.)
-/*
-        fragmentCalendarBinding.cfRvEvents.layoutManager?.on{
-            fragmentCalendarBinding.cfRvEvents.layoutManager?.scrollToPosition(0)
-        }
-
-*/
 
         Handler(Looper.getMainLooper()).postDelayed({
             fragmentCalendarBinding.cfRvEvents.layoutManager?.scrollToPosition(0)
@@ -110,7 +96,7 @@ class CalendarFragment : Fragment() {
     private fun initEventsRecyclerView() {
         fragmentCalendarBinding.cfRvEvents.apply {
             adapter = eventsAdapter
-            layoutManager = LinearLayoutManager(activity,RecyclerView.VERTICAL,false)
+            layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         }
     }
 
@@ -125,26 +111,20 @@ class CalendarFragment : Fragment() {
         monthYearText.text = calendarUtils.monthYearFromDate(calendarUtils.selectedDate)
         val daysInMonth = calendarUtils.getDaysInMonthArray(calendarUtils.selectedDate)
         calendarAdapter = CalendarAdapter(daysInMonth)
-
-        //var calendarRecyclerViewLayoutManager = GridLayoutManager(activity, 7)
         calendarRecyclerView.layoutManager = GridLayoutManager(activity, 7)
-
         calendarRecyclerView.adapter = calendarAdapter
-
-        eventsViewModel.getEventsOnCertainDay(CalendarUtils.selectedDate).observe(viewLifecycleOwner,{
-            eventsAdapter.differ.submitList(it)
-        })
+        eventsViewModel.getEventsOnCertainDay(CalendarUtils.selectedDate)
+            .observe(viewLifecycleOwner, {
+                eventsAdapter.differ.submitList(it)
+            })
 
         calendarAdapter.setOnItemClickListener { localDate ->
             if (localDate != null) {
-               var message = "Selected Date $localDate"
-                //Toast.makeText(parentFragment?.context, message, Toast.LENGTH_LONG).show()
-                eventsViewModel.getEventsOnCertainDay(localDate).observe(viewLifecycleOwner,{
+                eventsViewModel.getEventsOnCertainDay(localDate).observe(viewLifecycleOwner, {
                     eventsAdapter.differ.submitList(it)
                 })
             }
         }
-
     }
 
 
@@ -158,7 +138,7 @@ class CalendarFragment : Fragment() {
         setMonthView()
     }
 
-    private fun setEventListItemTouchHelper(){
+    private fun setEventListItemTouchHelper() {
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
@@ -168,7 +148,6 @@ class CalendarFragment : Fragment() {
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                //up and down so now
                 return false
             }
 
@@ -176,10 +155,8 @@ class CalendarFragment : Fragment() {
                 val event = eventsAdapter.differ.currentList[viewHolder.adapterPosition]
                 eventsViewModel.deleteEvent(event)
                 notificationUtils.createEventNotificationChannel(context!!)
-                notificationUtils.deleteNotification(context!!,event)
+                notificationUtils.deleteNotification(context!!, event)
             }
-
-
         }).attachToRecyclerView(fragmentCalendarBinding.cfRvEvents)
     }
 

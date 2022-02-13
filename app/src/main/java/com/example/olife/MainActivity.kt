@@ -55,21 +55,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var eventsAdapter: EventsAdapter
     lateinit var eventsViewModel: EventsViewModel
 
-    /*
-        lateinit var todayEventsViewModel: EventsViewModel
-        lateinit var tomorrowEventsViewModel: EventsViewModel
-        lateinit var dayAfterTomorrowEventsViewModel: EventsViewModel*/
-/*
-    @Inject
-    lateinit var todayEventsAdapter: EventsAdapter
-    @Inject
-    lateinit var tomorrowEventsAdapter: EventsAdapter
-    @Inject
-    lateinit var dayAfterTomorrowEventsAdapter: EventsAdapter
-*/
     @Inject
     lateinit var forthcomingEventsAdapter: EventsAdapter
-
     lateinit var forthcomingEventsViewModel: EventsViewModel
 
     @Inject
@@ -77,7 +64,6 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var alarmsAdapter: AlarmsAdapter
-
     lateinit var alarmsViewModel: AlarmsViewModel
 
 
@@ -104,26 +90,8 @@ class MainActivity : AppCompatActivity() {
         forthcomingEventsViewModel = ViewModelProvider(this, eventsViewModelFactory)
             .get(EventsViewModel::class.java)
 
-        alarmsViewModel = ViewModelProvider(this, alarmsViewModelFactory).get(AlarmsViewModel::class.java)
-        alarmsAdapter.alarmsViewModel=alarmsViewModel
-
-        //alarmsAdapter= AlarmsAdapter(alarmsViewModel)
-
-       /* GlobalScope.launch {
-            alarmsViewModel.saveAlarm(Alarm(null,"Mordo", LocalTime.now(),true,false,"",true))
-            alarmsViewModel.saveAlarm(Alarm(null,"Zaluj", LocalTime.now(),true,true,"",false))
-        }*/
-
-/*
-        todayEventsViewModel = ViewModelProvider(this, eventsViewModelFactory)
-            .get(EventsViewModel::class.java)
-        tomorrowEventsViewModel = ViewModelProvider(this, eventsViewModelFactory)
-            .get(EventsViewModel::class.java)
-        dayAfterTomorrowEventsViewModel = ViewModelProvider(this, eventsViewModelFactory)
-            .get(EventsViewModel::class.java)
-*/
-        // voiceNotesViewModel.saveVoiceNote(VoiceNote(null,"elo","elo"))
-
-        //eventsViewModel.saveEvent(Event(null, "Evento",CalendarUtils.getLocalDateFromString("24.11.2021"),TimeUtils.getLocalTimeFromString("09:30"),CalendarUtils.getLocalDateFromString("25.11.2021"),TimeUtils.getLocalTimeFromString("09:30"),"Pomaranczowe"))
+        alarmsViewModel =
+            ViewModelProvider(this, alarmsViewModelFactory).get(AlarmsViewModel::class.java)
+        alarmsAdapter.alarmsViewModel = alarmsViewModel
     }
 }

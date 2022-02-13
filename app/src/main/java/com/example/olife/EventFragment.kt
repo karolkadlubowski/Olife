@@ -102,19 +102,6 @@ class EventFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             mEvent!!.description = fragmentEventBinding.efEtDescription.text.toString()
             if (mEvent!!.id == null) {
                 var eventID: Long? = null
-/*
-                GlobalScope.launch {
-                     eventID=eventsViewModel.saveEvent(mEvent!!)
-                }.invokeOnCompletion{
-                    Log.i("DataID",eventID.toString() + "enio")
-                    mEvent!!.id = eventID?.toInt()
-                    notificationUtils = EventNotificationUtils(mEvent!!)
-                    notificationUtils!!.createEventNotificationChannel()
-                    notificationUtils!!.scheduleNotification(context!!)
-                    /* val eventNotificationUtils = EventNotificationUtils(mEvent!!)
-                     eventNotificationUtils.createEventNotificationChannel()
-                     eventNotificationUtils.displayNotification(context!!)*/
-                }*/
                 viewLifecycleOwner.lifecycleScope.launch {
                     eventID = eventsViewModel.saveEvent(mEvent!!)
                 }.invokeOnCompletion {
@@ -162,12 +149,30 @@ class EventFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         fragmentEventBinding.efEtEventDate.setOnClickListener {
             saveToEvent = true
             getEventDateCalendar()
-            parentFragment?.context?.let { DatePickerDialog(it,android.R.style.Theme_Holo_Dialog, this, year, month, day).show() }
+            parentFragment?.context?.let {
+                DatePickerDialog(
+                    it,
+                    android.R.style.Theme_Holo_Dialog,
+                    this,
+                    year,
+                    month,
+                    day
+                ).show()
+            }
         }
 
         fragmentEventBinding.efEtNotificationDate.setOnClickListener {
             getNotificationDateCalendar()
-            parentFragment?.context?.let { DatePickerDialog(it,android.R.style.Theme_Holo_Dialog, this, year, month, day).show() }
+            parentFragment?.context?.let {
+                DatePickerDialog(
+                    it,
+                    android.R.style.Theme_Holo_Dialog,
+                    this,
+                    year,
+                    month,
+                    day
+                ).show()
+            }
         }
     }
 

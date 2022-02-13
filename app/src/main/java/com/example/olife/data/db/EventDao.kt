@@ -24,5 +24,4 @@ interface EventDao {
 
     @Query("SELECT * FROM events WHERE   strftime('%s',eventDate) BETWEEN strftime('%s', :localDateFrom) AND strftime('%s', :localDateTo) ORDER BY eventDate,eventTime ASC")
     fun getEventsAtCurrentWeek(localDateFrom: LocalDate,localDateTo: LocalDate) : Flow<List<Event>>
-//    @Query("SELECT * FROM events WHERE  (strftime('%W',eventDate) = strftime('%W',:localDate) OR strftime('%W',eventDate) = strftime('%W',:localDate)+'1') AND strftime('%j',eventDate) >= strftime('%j',:localDate) AND strftime('%Y',eventDate) = strftime('%Y',:localDate) ORDER BY eventDate,eventTime ASC")
 }

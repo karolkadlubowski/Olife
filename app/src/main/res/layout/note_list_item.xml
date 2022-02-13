@@ -17,52 +17,41 @@
             android:id="@+id/hf_rv_notes_ll_add_note"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible"
-            >
-
-<!--            <ImageButton-->
-<!--                android:id="@+id/hf_rv_notes_item"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:background="#00000000"-->
-<!--                android:foreground="?attr/selectableItemBackgroundBorderless"-->
-<!--                android:src="@drawable/ic_add"-->
-<!--                />-->
+            android:visibility="visible">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#00000000"
-                android:src="@drawable/ic_add_circle"/>
+                android:src="@drawable/ic_add_circle" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/hf_rv_notes_ll_note"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="15dp"
             android:orientation="vertical"
+            android:padding="15dp"
             android:visibility="invisible">
 
             <TextView
                 android:id="@+id/hf_rv_notes_tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:text="Note title"
-                android:textSize="25sp"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_marginBottom="5dp"/>
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/hf_rv_notes_tv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Lorem ipsum et cetera tratata i givera hehehe"
-                android:textSize="15sp"
                 android:textColor="@color/white"
-                android:textStyle="bold"/>
-
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

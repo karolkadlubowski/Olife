@@ -6,9 +6,9 @@
     android:layout_marginTop="12dp"
     android:layout_marginRight="7.5dp"
     android:layout_marginBottom="12dp"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:foreground="?attr/selectableItemBackgroundBorderless">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="80dp"
@@ -21,15 +21,14 @@
             android:id="@+id/hf_rv_iv_voice_notes_play"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/ic_play"
-            />
+            android:src="@drawable/ic_play" />
 
         <ImageView
-            android:visibility="gone"
             android:id="@+id/hf_rv_iv_voice_notes_stop"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_pause"/>
+            android:src="@drawable/ic_pause"
+            android:visibility="gone" />
 
 
     </LinearLayout>
@@ -43,6 +42,5 @@
         android:text="recordingName"
         android:textColor="@color/white"
         android:textSize="15dp" />
-
 
 </LinearLayout>

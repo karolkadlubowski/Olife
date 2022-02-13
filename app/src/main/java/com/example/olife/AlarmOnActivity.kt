@@ -18,14 +18,10 @@ class AlarmOnActivity : AppCompatActivity() {
         binding = ActivityAlarmOnBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //var mp = MediaPlayer.create(applicationContext, R.raw.ringtone_default)
-        //mp.start()
-
-        binding.aaTurnOffAlarm.setOnClickListener{
+        binding.aaTurnOffAlarm.setOnClickListener {
             alarmUtils.mediaPlayer.stop()
             alarmUtils.vibe.cancel()
             onBackPressed()
         }
-        //setContentView(R.layout.activity_alarm_on)
     }
 }

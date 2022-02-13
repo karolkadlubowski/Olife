@@ -33,19 +33,9 @@ class EventNotification : BroadcastReceiver() {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.notify(intent.getIntExtra(eventID,0), notification)
     }
-//
-//    fun onCancel(){
-//        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-//        manager.notify(intent.getIntExtra(eventID,0), notification)
-//    }
 }
 
 object EventNotificationUtils {
-    init {
-        //createEventNotificationChannel()
-    }
-
-   // private val channelID = "com.example.olife.channel1"
     private var notificationManager: NotificationManager? = null
     private  var calendarUtils = CalendarUtils
     private var timeUtils = TimeUtils
@@ -60,36 +50,7 @@ object EventNotificationUtils {
             notificationManager?.createNotificationChannel(channel)
         }
     }
-/*
-    public fun displayNotification(context: Context) {
-        val tapResultIntent = Intent(context, CalendarFragment::class.java)
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(
-            context,
-            0,
-            tapResultIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
 
-        val notification = NotificationCompat.Builder(context, channelID)
-            .setContentTitle(mEvent.name)
-            .setContentText("Event is planned on " + calendarUtils.getStringFromLocalDate(mEvent!!.eventDate!!))
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setAutoCancel(true)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentIntent(pendingIntent)
-            .build()
-
-        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val time = getTime(mEvent!!.notificationDate!!, mEvent!!.notificationTime!!)
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            time,
-            pendingIntent
-        )
-
-        notificationManager?.notify(1,notification)
-    }
-*/
 
     fun deleteNotification(context: Context,mEvent:Event){
         val intent = Intent(context, EventNotification::class.java)

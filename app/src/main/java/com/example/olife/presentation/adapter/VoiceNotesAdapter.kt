@@ -11,25 +11,23 @@ import com.example.olife.databinding.VoiceNoteListItemBinding
 
 class VoiceNotesAdapter() : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNotesViewHolder>() {
 
-    //var _binding : VoiceNoteListItemBinding? = null
 
-    private val callback = object : DiffUtil.ItemCallback<VoiceNote>(){
+    private val callback = object : DiffUtil.ItemCallback<VoiceNote>() {
         override fun areItemsTheSame(oldItem: VoiceNote, newItem: VoiceNote): Boolean {
-            return oldItem.id==newItem.id
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: VoiceNote, newItem: VoiceNote): Boolean {
-            return oldItem==newItem
+            return oldItem == newItem
         }
 
     }
 
-    val differ = AsyncListDiffer(this,callback)
+    val differ = AsyncListDiffer(this, callback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VoiceNotesViewHolder {
         val binding = VoiceNoteListItemBinding
-            .inflate(LayoutInflater.from(parent.context),parent,false)
-        //_binding=binding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
         return VoiceNotesViewHolder(binding)
     }
 
@@ -43,10 +41,11 @@ class VoiceNotesAdapter() : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNotesVie
         return differ.currentList.size
     }
 
-    inner class VoiceNotesViewHolder(val binding: VoiceNoteListItemBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(voiceNote:VoiceNote){
+    inner class VoiceNotesViewHolder(val binding: VoiceNoteListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(voiceNote: VoiceNote) {
 
-            binding.hfRvVoiceNoteItemTitle.text=voiceNote.title
+            binding.hfRvVoiceNoteItemTitle.text = voiceNote.title
 
             binding.root.setOnClickListener {
                 onItemClickListener?.let {
@@ -56,9 +55,9 @@ class VoiceNotesAdapter() : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNotesVie
         }
     }
 
-    private var onItemClickListener : ((VoiceNote)->Unit)?=null
+    private var onItemClickListener: ((VoiceNote) -> Unit)? = null
 
-    fun setOnItemClickListener(listener : (VoiceNote)->Unit){
+    fun setOnItemClickListener(listener: (VoiceNote) -> Unit) {
         onItemClickListener = listener
     }
 }

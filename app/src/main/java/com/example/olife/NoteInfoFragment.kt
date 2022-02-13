@@ -12,9 +12,9 @@ import com.example.olife.presentation.viewmodel.note.NotesViewModel
 
 
 class NoteInfoFragment : Fragment() {
-    private lateinit var fragmentNoteInfoBinding : FragmentNoteInfoBinding
-    private lateinit var notesViewModel : NotesViewModel
-    private lateinit var mNote : Note
+    private lateinit var fragmentNoteInfoBinding: FragmentNoteInfoBinding
+    private lateinit var notesViewModel: NotesViewModel
+    private lateinit var mNote: Note
 
 
     override fun onCreateView(
@@ -29,7 +29,7 @@ class NoteInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         fragmentNoteInfoBinding = FragmentNoteInfoBinding.bind(view)
-        val args : NoteInfoFragmentArgs by navArgs()
+        val args: NoteInfoFragmentArgs by navArgs()
         mNote = args.selectedNote
 
         fragmentNoteInfoBinding.nfTvTitle.setText(mNote.title)
@@ -39,13 +39,13 @@ class NoteInfoFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        /*if(mNote.id==null){
-            notesViewModel.saveNote(Note(null,fragmentNoteInfoBinding.nfTvTitle.text.toString(),fragmentNoteInfoBinding.nfTvContent.text.toString()))
-        }
-        else
-        {*/
-            notesViewModel.updateNote(Note(mNote.id,fragmentNoteInfoBinding.nfTvTitle.text.toString(),fragmentNoteInfoBinding.nfTvContent.text.toString()))
-        //}
+        notesViewModel.updateNote(
+            Note(
+                mNote.id,
+                fragmentNoteInfoBinding.nfTvTitle.text.toString(),
+                fragmentNoteInfoBinding.nfTvContent.text.toString()
+            )
+        )
         super.onDestroyView()
     }
 

@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
     android:backgroundTint="@color/LightGreen3"
-    app:cardCornerRadius="20dp"
-    android:layout_marginTop="10dp">
+    app:cardCornerRadius="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -45,46 +45,28 @@
             android:id="@+id/li_tv_alarm_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:hint="Title of alarm"
-            android:singleLine="true"
             android:maxWidth="190dp"
+            android:singleLine="true"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="20sp"
-            android:layout_marginLeft="20dp"
             android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@id/li_tv_alarm_repeat"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-
-<!--            android:layout_marginRight="15dp"-->
-<!--            android:hint="Title "-->
-<!--            android:maxWidth="180dp"-->
-<!--            android:singleLine="true"-->
-<!--            android:textColor="@color/LightLightGray"-->
-<!--            android:textColorHint="@color/white"-->
-<!--            android:textSize="30dp"-->
-<!--            android:textStyle="bold"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintLeft_toRightOf="@id/li_tv_alarm_time"-->
-<!--            app:layout_constraintRight_toLeftOf="@id/li_sw_alarm_switch"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/li_tv_alarm_repeat" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/li_sw_alarm_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:scaleX="1.5"
             android:scaleY="1.5"
-            android:layout_marginRight="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:useMaterialThemeColors="false"
-            />
+            app:useMaterialThemeColors="false" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

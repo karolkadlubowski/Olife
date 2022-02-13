@@ -23,31 +23,30 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class AlarmsAdapter() : RecyclerView.Adapter<AlarmsAdapter.AlarmsViewHolder>() {
+class AlarmsAdapter : RecyclerView.Adapter<AlarmsAdapter.AlarmsViewHolder>() {
 
-    lateinit var alarmsViewModel : AlarmsViewModel
+    lateinit var alarmsViewModel: AlarmsViewModel
 
     var alarmUtils = AlarmUtils
 
-    private lateinit var context : Context
+    private lateinit var context: Context
 
-    private val callback = object : DiffUtil.ItemCallback<Alarm>(){
+    private val callback = object : DiffUtil.ItemCallback<Alarm>() {
         override fun areItemsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
-            return oldItem.id==newItem.id
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
-            return oldItem==newItem
+            return oldItem == newItem
         }
     }
 
-    val differ = AsyncListDiffer(this,callback)
-
+    val differ = AsyncListDiffer(this, callback)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmsViewHolder {
-       val binding = AlarmListItemBinding
-           .inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = AlarmListItemBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
         context = parent.context
         return AlarmsViewHolder(binding)
     }
@@ -59,36 +58,34 @@ class AlarmsAdapter() : RecyclerView.Adapter<AlarmsAdapter.AlarmsViewHolder>() {
         //holder.binding.liSwAlarmSwitch.setOnCheckedChangeListener() DOESNT WORK IN THIS UTILITY
 
         holder.binding.liSwAlarmSwitch.setOnClickListener {
-            alarm.isTurnedOn=holder.binding.liSwAlarmSwitch.isChecked
+            alarm.isTurnedOn = holder.binding.liSwAlarmSwitch.isChecked
             alarmsViewModel.updateAlarm(alarm)
 
-            if(alarm.isTurnedOn==true){
+            if (alarm.isTurnedOn == true) {
                 alarmUtils.createAlarmNotificationChannel(context!!)
-                alarmUtils.scheduleAlarm(context!!,alarm!!)
-            }else{
+                alarmUtils.scheduleAlarm(context!!, alarm!!)
+            } else {
                 alarmUtils.createAlarmNotificationChannel(context)
-                alarmUtils.cancelAlarm(context!!,alarm)
+                alarmUtils.cancelAlarm(context!!, alarm)
             }
         }
-
-
-
     }
 
     override fun getItemCount(): Int = differ.currentList.size
 
     private val timeUtils = TimeUtils
 
-    private var onItemClickListener : ((Alarm)->Unit)?=null
+    private var onItemClickListener: ((Alarm) -> Unit)? = null
 
-    fun setOnItemClickListener(listener : (Alarm)->Unit){
+    fun setOnItemClickListener(listener: (Alarm) -> Unit) {
         onItemClickListener = listener
     }
 
-    inner class AlarmsViewHolder(val binding: AlarmListItemBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(alarm: Alarm){
-            binding.liSwAlarmSwitch.isChecked=alarm.isTurnedOn!!
-            binding.liTvAlarmRepeat.text = if(alarm.repeat!!) "Everyday" else " Only once"
+    inner class AlarmsViewHolder(val binding: AlarmListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(alarm: Alarm) {
+            binding.liSwAlarmSwitch.isChecked = alarm.isTurnedOn!!
+            binding.liTvAlarmRepeat.text = if (alarm.repeat!!) "Everyday" else " Only once"
             binding.liTvAlarmTime.text = timeUtils.getStringFromLocalTime(alarm.time!!)
             binding.liTvAlarmTitle.text = alarm.title!!
 

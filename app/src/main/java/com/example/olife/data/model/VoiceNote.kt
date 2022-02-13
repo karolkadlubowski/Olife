@@ -12,8 +12,4 @@ data class VoiceNote(
     var id: Int?,
     var title: String?,
     var memoryLocation: String?
-) : Serializable {
-    /*override fun equals(other: Any?): Boolean {
-        return this.id==(other as VoiceNote).id && this.name==(other as VoiceNote).name && this.memoryLocation==(other as VoiceNote).memoryLocation
-    }*///should be overwritten if not data class
-}
+) : Serializable

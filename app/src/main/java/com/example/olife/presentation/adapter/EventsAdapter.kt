@@ -12,22 +12,22 @@ import com.example.olife.utils.TimeUtils
 
 class EventsAdapter : RecyclerView.Adapter<EventsAdapter.EventsViewHolder>() {
 
-    private val callback = object : DiffUtil.ItemCallback<Event>(){
+    private val callback = object : DiffUtil.ItemCallback<Event>() {
         override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
-            return oldItem.id==newItem.id
+            return oldItem.id == newItem.id
         }
 
 
         override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
-            return oldItem==newItem
+            return oldItem == newItem
         }
     }
 
-    val differ = AsyncListDiffer(this,callback)
+    val differ = AsyncListDiffer(this, callback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventsViewHolder {
         val binding = EventListItemBinding
-            .inflate(LayoutInflater.from(parent.context),parent,false)
+            .inflate(LayoutInflater.from(parent.context), parent, false)
         return EventsViewHolder(binding)
     }
 
@@ -41,13 +41,13 @@ class EventsAdapter : RecyclerView.Adapter<EventsAdapter.EventsViewHolder>() {
     }
 
 
+    inner class EventsViewHolder(val binding: EventListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-    inner class EventsViewHolder(val binding: EventListItemBinding) : RecyclerView.ViewHolder(binding.root){
-
-        fun bind(event: Event){
+        fun bind(event: Event) {
 
             binding.cfLiTvEventTitle.text = event.name
-            binding.cfLiTvEventHour.text= event.eventTime?.let { it ->
+            binding.cfLiTvEventHour.text = event.eventTime?.let { it ->
                 TimeUtils.getStringFromLocalTime(
                     it
                 )
@@ -61,9 +61,9 @@ class EventsAdapter : RecyclerView.Adapter<EventsAdapter.EventsViewHolder>() {
         }
     }
 
-    private var onItemClickListener : ((Event) -> Unit)?=null
+    private var onItemClickListener: ((Event) -> Unit)? = null
 
-    fun setOnItemClickListener(listener : (Event)->Unit){
+    fun setOnItemClickListener(listener: (Event) -> Unit) {
         onItemClickListener = listener
     }
 

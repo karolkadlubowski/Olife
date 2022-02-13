@@ -19,6 +19,7 @@ import com.example.olife.presentation.adapter.NotesAdapter
 import com.example.olife.presentation.adapter.VoiceNotesAdapter
 import com.example.olife.presentation.viewmodel.note.NotesViewModel
 import com.example.olife.presentation.viewmodel.voiceNote.VoiceNotesViewModel
+import com.example.olife.utils.VoiceRecorder
 
 import java.util.*
 import kotlin.collections.ArrayList
@@ -30,8 +31,7 @@ class HomeFragment : Fragment() {
     private lateinit var notesAdapter: NotesAdapter
 
     private lateinit var voiceNotesViewModel: VoiceNotesViewModel
-    private lateinit var voiceNotesAdapter : VoiceNotesAdapter
-
+    private lateinit var voiceNotesAdapter: VoiceNotesAdapter
 
 
     override fun onCreateView(
@@ -54,9 +54,8 @@ class HomeFragment : Fragment() {
         notesAdapter.setOnItemClickListener {
             Bundle().apply {
                 if (it.id == null)
-                        notesViewModel.saveNote(Note(null, null, null))
-                else
-                {
+                    notesViewModel.saveNote(Note(null, null, null))
+                else {
                     putSerializable("selected_note", it)
                     findNavController().navigate(
                         R.id.action_homeFragment_to_noteInfoFragment,
@@ -87,11 +86,8 @@ class HomeFragment : Fragment() {
             mp.setDataSource(it.memoryLocation)
             mp.prepare()
             mp.start()
-           // voiceNotesAdapter._binding?.hfRvIvVoiceNotesStop?.visibility
         }
 
-
-        //context.externalMediaDirs
         var voiceRecorder = VoiceRecorder(this.requireContext())
 
         fragmentHomeBinding.hfIbRecordStart.setOnClickListener {
@@ -111,7 +107,6 @@ class HomeFragment : Fragment() {
                 ActivityCompat.requestPermissions(activity as MainActivity, permissions, 0)
             } else {
                 voiceRecorder.setUp()
-                //Toast.makeText(activity,"Recording started",Toast.LENGTH_SHORT).show()
                 fragmentHomeBinding.hfIbRecordStart.visibility = View.INVISIBLE
                 fragmentHomeBinding.hfIbRecordStop.visibility = View.VISIBLE
                 voiceRecorder.startRecording()
@@ -122,14 +117,20 @@ class HomeFragment : Fragment() {
             fragmentHomeBinding.hfIbRecordStart.visibility = View.VISIBLE
             fragmentHomeBinding.hfIbRecordStop.visibility = View.INVISIBLE
             voiceRecorder.stopRecording()
-            voiceNotesViewModel.saveVoiceNote(VoiceNote(null,voiceRecorder.fileName,voiceRecorder.output))
+            voiceNotesViewModel.saveVoiceNote(
+                VoiceNote(
+                    null,
+                    voiceRecorder.fileName,
+                    voiceRecorder.output
+                )
+            )
         }
 
         fragmentHomeBinding.hfTvWelcome.text = getTimeFromWelcoming()
 
         initVoiceNotesRecyclerView()
 
-        voiceNotesViewModel.getSavedVoiceNotes().observe(viewLifecycleOwner,{
+        voiceNotesViewModel.getSavedVoiceNotes().observe(viewLifecycleOwner, {
             voiceNotesAdapter.differ.submitList(it)
         })
 
@@ -143,7 +144,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun initVoiceNotesRecyclerView(){
+    private fun initVoiceNotesRecyclerView() {
         fragmentHomeBinding.hfRvVoiceNotes.apply {
             adapter = voiceNotesAdapter
             layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
@@ -158,13 +159,13 @@ class HomeFragment : Fragment() {
             return "Good morning"
         } else if (hours in 12..17) {
             return "Good afternoon"
-        } else if (hours in 18..24 || hours ==0) {
+        } else if (hours in 18..24 || hours == 0) {
             return "Good evening"
         }
         return "Hello"
     }
 
-    private fun setNoteListItemTouchHelper(){
+    private fun setNoteListItemTouchHelper() {
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
@@ -174,7 +175,6 @@ class HomeFragment : Fragment() {
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                //up and down so now
                 return false
             }
 
@@ -195,11 +195,11 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun setVoiceNoteListItemTouchHelper(){
+    private fun setVoiceNoteListItemTouchHelper() {
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
             ItemTouchHelper.UP or ItemTouchHelper.DOWN
-        ){
+        ) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,

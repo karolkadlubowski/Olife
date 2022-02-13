@@ -14,24 +14,25 @@ import com.example.olife.databinding.CalendarCellListItemBinding
 import com.example.olife.utils.CalendarUtils
 import java.time.LocalDate
 
-class CalendarAdapter(private val days: ArrayList<LocalDate?>) : RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>() {
+class CalendarAdapter(private val days: ArrayList<LocalDate?>) :
+    RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>() {
     val calendarUtils = CalendarUtils
 
-    var selectedItem : Int? = null
+    var selectedItem: Int? = null
 
-    var bindingsList : ArrayList<CalendarCellListItemBinding>? =
+    var bindingsList: ArrayList<CalendarCellListItemBinding>? =
         ArrayList()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
         val binding = CalendarCellListItemBinding
-            .inflate(LayoutInflater.from(parent.context),parent,false)
+            .inflate(LayoutInflater.from(parent.context), parent, false)
         bindingsList?.add(binding)
-        binding.cfTvCalendarCell.width= parent.width/7
-        //binding.hfTvCalendarCell.height=parent.height/5
-        binding.cfTvCalendarCell.gravity=Gravity.CENTER_HORIZONTAL
+        binding.cfTvCalendarCell.width = parent.width / 7
+        binding.cfTvCalendarCell.gravity = Gravity.CENTER_HORIZONTAL
         val typedValue = TypedValue()
-        parent.context.theme.resolveAttribute(android.R.attr.selectableItemBackground,typedValue,
+        parent.context.theme.resolveAttribute(
+            android.R.attr.selectableItemBackground, typedValue,
             true
         )
 
@@ -40,12 +41,12 @@ class CalendarAdapter(private val days: ArrayList<LocalDate?>) : RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) {
-        holder.bind(days[position],position)
+        holder.bind(days[position], position)
 
         val date = days[position]
-        if(date!=null && date == calendarUtils.selectedDate){
+        if (date != null && date == calendarUtils.selectedDate) {
             holder.binding.cfLl.setBackgroundColor(Color.LTGRAY)
-            selectedItem=position
+            selectedItem = position
         }
 
     }
@@ -55,37 +56,41 @@ class CalendarAdapter(private val days: ArrayList<LocalDate?>) : RecyclerView.Ad
         return days.size
     }
 
-    inner class CalendarViewHolder(val binding : CalendarCellListItemBinding) : RecyclerView.ViewHolder(binding.root){
-       private var date: LocalDate? = null
+    inner class CalendarViewHolder(val binding: CalendarCellListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        private var date: LocalDate? = null
 
-       fun bind(dayOfMonth: LocalDate?,position: Int){
+        fun bind(dayOfMonth: LocalDate?, position: Int) {
 
-           date = dayOfMonth
-           if (dayOfMonth != null) {
-               binding.cfTvCalendarCell.text=dayOfMonth.dayOfMonth.toString()
-           }else
-               binding.cfTvCalendarCell.text=""
-           binding.root.setOnClickListener {
-               if(date!=null){
-                   calendarUtils.selectedDate = date as LocalDate
-                   selectedItem?.let { it1 -> bindingsList?.get(it1)?.cfLl!!.setBackgroundColor(Color.TRANSPARENT) }
-                   selectedItem = position
+            date = dayOfMonth
+            if (dayOfMonth != null) {
+                binding.cfTvCalendarCell.text = dayOfMonth.dayOfMonth.toString()
+            } else
+                binding.cfTvCalendarCell.text = ""
+            binding.root.setOnClickListener {
+                if (date != null) {
+                    calendarUtils.selectedDate = date as LocalDate
+                    selectedItem?.let { it1 ->
+                        bindingsList?.get(it1)?.cfLl!!.setBackgroundColor(
+                            Color.TRANSPARENT
+                        )
+                    }
+                    selectedItem = position
                     binding.cfLl.setBackgroundColor(Color.LTGRAY)
 
-               }
+                }
 
-               onItemClickListener?.let {
-                   it(dayOfMonth)
-               }
-           }
-
-
+                onItemClickListener?.let {
+                    it(dayOfMonth)
+                }
+            }
 
         }
     }
-    private var onItemClickListener : ((LocalDate?)->Unit)?=null
 
-    fun setOnItemClickListener(listener:(LocalDate?)->Unit){
-        onItemClickListener=listener
+    private var onItemClickListener: ((LocalDate?) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (LocalDate?) -> Unit) {
+        onItemClickListener = listener
     }
 }
