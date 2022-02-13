@@ -70,10 +70,10 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
             alarmUtils.vibe.vibrate(pattern, 0)
         }
 
-        if (mAlarm.repeat!!) {
-            alarmUtils.createAlarmNotificationChannel(context!!)
-            alarmUtils.scheduleAlarm(context!!, mAlarm!!)
-        }
+//        if (mAlarm.repeat!!) {
+//            alarmUtils.createAlarmNotificationChannel(context!!)
+//            alarmUtils.scheduleAlarm(context!!, mAlarm!!)
+//        }
 
 
         alarmUtils.mediaPlayer.start()
