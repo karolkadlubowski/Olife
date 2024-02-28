@@ -32,6 +32,3 @@ The forthcoming fragment consists of saved alarms section and forthcoming events
 Alarm details could be adjusted in the alarm fragment.
 
 <img src="https://github.com/karolkadlubowski/Olife/blob/main/AppScreens/alarm_fragment.png" width="200"/>
-
-
-The application is currently under testing process.
